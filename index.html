@@ -847,136 +847,136 @@
     </footer>
   </main>
 
-  <!-- Supabase JS Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-  <script>
-    // Initialize Supabase
-    const supabaseUrl = 'https://lgdvaltheangnlsjjtpb.supabase.co';
-    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZHZhbHRoZWFuZ25sc2pqdHBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNzA3NTIsImV4cCI6MjA4NzY0Njc1Mn0.73pWzCGVNj0LoIaCC5NIKfvXqzLu-oqak1QbMaSDIXA';
-    const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-
-    // DOM Elements
-    const messageForm = document.getElementById('message-form');
-    const nicknameInput = document.getElementById('nickname');
-    const contentInput = document.getElementById('content');
-    const messagesContainer = document.getElementById('messages-container');
-
-    // Format date to YYYY-MM-DD HH:MM
-    function formatDate(dateString) {
-      const date = new Date(dateString);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      return `${year}-${month}-${day} ${hours}:${minutes}`;
-    }
-
-    // Render messages
-    async function renderMessages() {
-      try {
-        const { data: messages, error } = await supabaseClient
-          .from('messages')
-          .select('*')
-          .order('created_at', { ascending: false });
-
-        if (error) {
-          console.error('Error fetching messages:', error);
-          return;
-        }
-
-        if (messages.length === 0) {
-          messagesContainer.innerHTML = '<div style="text-align: center; color: var(--muted); padding: 24px;">暂无留言</div>';
-          return;
-        }
-
-        messagesContainer.innerHTML = messages.map(message => `
-          <div class="message-item">
-            <div class="message-header">
-              <div class="message-nickname">${message.nickname}</div>
-              <div class="message-time">${formatDate(message.created_at)}</div>
-            </div>
-            <div class="message-content">${message.content}</div>
-          </div>
-        `).join('');
-      } catch (error) {
-        console.error('Error rendering messages:', error);
-      }
-    }
-
-    // Handle form submission
-    messageForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const nickname = nicknameInput.value.trim();
-      const content = contentInput.value.trim();
-
-      if (!nickname || !content) {
-        return;
-      }
-
-      try {
-        const { error } = await supabaseClient
-          .from('messages')
-          .insert([{ nickname, content }]);
-
-        if (error) {
-          console.error('Error submitting message:', error);
-          return;
-        }
-
-        // Clear form inputs
-        nicknameInput.value = '';
-        contentInput.value = '';
-
-        // Re-render messages
-        await renderMessages();
-      } catch (error) {
-        console.error('Error submitting message:', error);
-      }
-    });
-
-    // Load messages on page load
-    renderMessages();
-
-    // Existing script
-    
-    (function () {
-      var glow = document.querySelector(".cursor-glow");
-      var inner = document.querySelector(".cursor-glow-inner");
-      if (!glow || !inner) return;
-
-      var ticking = false;
-
-      function updatePosition(x, y) {
-        var size = 420;
-        inner.style.transform =
-          "translate3d(" + (x - size / 2) + "px, " + (y - size / 2) + "px, 0)";
-      }
-
-      window.addEventListener("mousemove", function (e) {
-        glow.style.opacity = "1";
-
-        var x = e.clientX;
-        var y = e.clientY;
-
-        if (!ticking) {
-          window.requestAnimationFrame(function () {
-            updatePosition(x, y);
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-
-      window.addEventListener("mouseout", function (e) {
-        if (!e.relatedTarget && !e.toElement) {
-          glow.style.opacity = "0";
-        }
-      });
-    })();
-  </script>
+ 
+ <script>
+ 
+     const _url = 'https://lgdvaltheangnlsjjtpb.supabase.co';
+ 
+     const _key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZHZhbHRoZWFuZ25sc2pqdHBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNzA3NTIsImV4cCI6MjA4NzY0Njc1Mn0.73pWzCGVNj0LoIaCC5NIKfvXqzLu-oqak1QbMaSDIXA';
+ 
+     const supabaseClient = window.supabase.createClient(_url, _key);
+ 
+  
+     const messageForm = document.getElementById('message-form');
+ 
+     const messagesContainer = document.getElementById('messages-container');
+ 
+  
+     async function fetchAndRender() {
+ 
+         try {
+ 
+             const { data, error } = await supabaseClient
+ 
+                 .from('messages')
+ 
+                 .select('*')
+ 
+                 .order('created_at', { ascending: false });
+ 
+             if (error) throw error;
+ 
+             if (!data || data.length === 0) {
+ 
+                 messagesContainer.innerHTML = '<div style="text-align:center;color:#888;padding:20px;">暂无留言，快来发第一条吧！</div>';
+ 
+                 return;
+ 
+             }
+ 
+             messagesContainer.innerHTML = data.map(m => `
+ 
+                 <div class="message-item" style="border-bottom:1px solid #eee;padding:10px 0;">
+ 
+                     <div style="display:flex;justify-content:space-between;font-size:0.9em;color:#666;">
+ 
+                         <strong>${m.nickname}</strong>
+ 
+                         <span>${new Date(m.created_at).toLocaleString()}</span>
+ 
+                     </div>
+ 
+                     <div style="margin-top:5px;color:#333;">${m.content}</div>
+ 
+                 </div>
+ 
+             `).join('');
+ 
+         } catch (err) { console.error('读取失败:', err); }
+ 
+     }
+ 
+  
+     messageForm.addEventListener('submit', async (e) => {
+ 
+         e.preventDefault();
+ 
+         const btn = messageForm.querySelector('button');
+ 
+         const nick = document.getElementById('nickname').value.trim();
+ 
+         const cont = document.getElementById('content').value.trim();
+ 
+         if(!nick || !cont) return;
+ 
+  
+         btn.disabled = true;
+ 
+         btn.innerText = '发送中...';
+ 
+  
+         try {
+ 
+             const { error } = await supabaseClient.from('messages').insert([{ nickname: nick, content: cont }]);
+ 
+             if (error) throw error;
+ 
+             document.getElementById('nickname').value = '';
+ 
+             document.getElementById('content').value = '';
+ 
+             await fetchAndRender();
+ 
+         } catch (err) {
+ 
+             alert('提交失败，请检查Supabase数据库RLS权限是否开启！');
+ 
+             console.error(err);
+ 
+         } finally {
+ 
+             btn.disabled = false;
+ 
+             btn.innerText = '提交';
+ 
+         }
+ 
+     });
+ 
+  
+     fetchAndRender();
+ 
+  
+     // 保持原有光标特效
+ 
+     (function(){
+ 
+         var glow=document.querySelector(".cursor-glow"),inner=document.querySelector(".cursor-glow-inner");
+ 
+         if(!glow||!inner)return;
+ 
+         window.addEventListener("mousemove",function(e){
+ 
+             glow.style.opacity="1";
+ 
+             inner.style.transform="translate3d("+(e.clientX-210)+"px,"+(e.clientY-210)+"px,0)";
+ 
+         });
+ 
+     })();
+ 
+ </script>
 </body>
 </html>
 
