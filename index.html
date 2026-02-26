@@ -887,7 +887,7 @@
  
              messagesContainer.innerHTML = data.map(m => `
  
-                 <div class="message-item" style="border-bottom:1px solid #eee;padding:10px 0;">
+                 <div class="message-item" style="border-bottom:1px solid #eee;padding:10px 0;position:relative;">
  
                      <div style="display:flex;justify-content:space-between;font-size:0.9em;color:#666;">
  
@@ -899,9 +899,37 @@
  
                      <div style="margin-top:5px;color:#333;">${m.content}</div>
  
+                     <button onclick="deleteMessage('${m.id}')" style="position:absolute;top:10px;right:10px;font-size:0.8em;color:red;background:none;border:none;cursor:pointer;">删除</button>
+ 
                  </div>
  
              `).join('');
+ 
+         } catch (err) { console.error('读取失败:', err); }
+ 
+     }
+ 
+     async function deleteMessage(id) {
+ 
+         if (!confirm('确定要删除这条留言吗？')) return;
+ 
+         try {
+ 
+             const { error } = await supabaseClient.from('messages').delete().eq('id', id);
+ 
+             if (error) throw error;
+ 
+             await fetchAndRender();
+ 
+         } catch (err) {
+ 
+             alert('删除失败，请检查Supabase数据库RLS权限是否开启！');
+ 
+             console.error(err);
+ 
+         }
+ 
+     }
  
          } catch (err) { console.error('读取失败:', err); }
  
