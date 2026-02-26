@@ -460,8 +460,8 @@
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
-      padding: 24px;
-      }
+      padding: 24px;git remote add origin [你刚才复制的仓库链接]
+    }
 
     .message-form {
       margin-bottom: 32px;
@@ -847,164 +847,144 @@
     </footer>
   </main>
 
+  <!-- Supabase JS Library -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
- 
- <script>
- 
-     const _url = 'https://lgdvaltheangnlsjjtpb.supabase.co';
- 
-     const _key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZHZhbHRoZWFuZ25sc2pqdHBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNzA3NTIsImV4cCI6MjA4NzY0Njc1Mn0.73pWzCGVNj0LoIaCC5NIKfvXqzLu-oqak1QbMaSDIXA';
- 
-     const supabaseClient = window.supabase.createClient(_url, _key);
- 
+
+  <script>
+
+      const _url = 'https://lgdvaltheangnlsjjtpb.supabase.co';
+
+      const _key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZHZhbHRoZWFuZ25sc2pqdHBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNzA3NTIsImV4cCI6MjA4NzY0Njc1Mn0.73pWzCGVNj0LoIaCC5NIKfvXqzLu-oqak1QbMaSDIXA';
+
+      const supabaseClient = window.supabase.createClient(_url, _key);
+
   
-     const messageForm = document.getElementById('message-form');
- 
-     const messagesContainer = document.getElementById('messages-container');
- 
+
+      const messageForm = document.getElementById('message-form');
+
+      const messagesContainer = document.getElementById('messages-container');
+
   
-     async function fetchAndRender() {
- 
-         try {
- 
-             const { data, error } = await supabaseClient
- 
-                 .from('messages')
- 
-                 .select('*')
- 
-                 .order('created_at', { ascending: false });
- 
-             if (error) throw error;
- 
-             if (!data || data.length === 0) {
- 
-                 messagesContainer.innerHTML = '<div style="text-align:center;color:#888;padding:20px;">暂无留言，快来发第一条吧！</div>';
- 
-                 return;
- 
-             }
- 
-             messagesContainer.innerHTML = data.map(m => `
- 
-                 <div class="message-item" style="border-bottom:1px solid #eee;padding:10px 0;position:relative;">
- 
-                     <div style="display:flex;justify-content:space-between;font-size:0.9em;color:#666;">
- 
-                         <strong>${m.nickname}</strong>
- 
-                         <span>${new Date(m.created_at).toLocaleString()}</span>
- 
-                     </div>
- 
-                     <div style="margin-top:5px;color:#333;">${m.content}</div>
- 
-                     <button onclick="deleteMessage('${m.id}')" style="position:absolute;top:10px;right:10px;font-size:0.8em;color:red;background:none;border:none;cursor:pointer;">删除</button>
- 
-                 </div>
- 
-             `).join('');
- 
-         } catch (err) { console.error('读取失败:', err); }
- 
-     }
- 
-     async function deleteMessage(id) {
- 
-         if (!confirm('确定要删除这条留言吗？')) return;
- 
-         try {
- 
-             const { error } = await supabaseClient.from('messages').delete().eq('id', id);
- 
-             if (error) throw error;
- 
-             await fetchAndRender();
- 
-         } catch (err) {
- 
-             alert('删除失败，请检查Supabase数据库RLS权限是否开启！');
- 
-             console.error(err);
- 
-         }
- 
-     }
- 
-         } catch (err) { console.error('读取失败:', err); }
- 
-     }
- 
+
+      async function deleteMessage(id) {
+
+          if (!confirm('确定要删除这条留言吗？')) return;
+
+          try {
+
+              const { error } = await supabaseClient.from('messages').delete().eq('id', id);
+
+              if (error) throw error;
+
+              await fetchAndRender();
+
+          } catch (err) {
+
+              alert('删除失败，请检查 Supabase 是否开启了 DELETE 权限！');
+
+          }
+
+      }
+
   
-     messageForm.addEventListener('submit', async (e) => {
- 
-         e.preventDefault();
- 
-         const btn = messageForm.querySelector('button');
- 
-         const nick = document.getElementById('nickname').value.trim();
- 
-         const cont = document.getElementById('content').value.trim();
- 
-         if(!nick || !cont) return;
- 
+
+      async function fetchAndRender() {
+
+          try {
+
+              const { data, error } = await supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
+
+              if (error) throw error;
+
+              messagesContainer.innerHTML = data.length === 0 ? '<div style="text-align:center;color:#888;padding:20px;">暂无留言</div>' : 
+
+                  data.map(m => `
+
+                  <div class="message-item" style="border-bottom:1px solid rgba(255,255,255,0.1);padding:15px 0;position:relative;">
+
+                      <button onclick="deleteMessage(${m.id})" style="position:absolute;right:0;top:15px;background:none;border:none;color:#ff4d4f;cursor:pointer;font-size:12px;">删除</button>
+
+                      <div style="display:flex;justify-content:space-between;font-size:0.9em;color:#aaa;margin-bottom:8px;padding-right:40px;">
+
+                          <strong>${m.nickname}</strong>
+
+                          <span>${new Date(m.created_at).toLocaleString()}</span>
+
+                      </div>
+
+                      <div style="color:#eee;line-height:1.6;">${m.content}</div>
+
+                  </div>
+
+              `).join('');
+
+          } catch (err) { console.error(err); }
+
+      }
+
   
-         btn.disabled = true;
- 
-         btn.innerText = '发送中...';
- 
+
+      if (messageForm) {
+
+          messageForm.addEventListener('submit', async (e) => {
+
+              e.preventDefault();
+
+              const btn = messageForm.querySelector('button');
+
+              const nick = document.getElementById('nickname').value.trim();
+
+              const cont = document.getElementById('content').value.trim();
+
+              if(!nick || !cont) return;
+
+              btn.disabled = true; btn.innerText = '发送中...';
+
+              try {
+
+                  const { error } = await supabaseClient.from('messages').insert([{ nickname: nick, content: cont }]);
+
+                  if (error) throw error;
+
+                  document.getElementById('nickname').value = '';
+
+                  document.getElementById('content').value = '';
+
+                  await fetchAndRender();
+
+              } catch (err) { alert('提交失败！'); } finally {
+
+                  btn.disabled = false; btn.innerText = '提交';
+
+              }
+
+          });
+
+      }
+
   
-         try {
- 
-             const { error } = await supabaseClient.from('messages').insert([{ nickname: nick, content: cont }]);
- 
-             if (error) throw error;
- 
-             document.getElementById('nickname').value = '';
- 
-             document.getElementById('content').value = '';
- 
-             await fetchAndRender();
- 
-         } catch (err) {
- 
-             alert('提交失败，请检查Supabase数据库RLS权限是否开启！');
- 
-             console.error(err);
- 
-         } finally {
- 
-             btn.disabled = false;
- 
-             btn.innerText = '提交';
- 
-         }
- 
-     });
- 
+
+      fetchAndRender();
+
   
-     fetchAndRender();
- 
-  
-     // 保持原有光标特效
- 
-     (function(){
- 
-         var glow=document.querySelector(".cursor-glow"),inner=document.querySelector(".cursor-glow-inner");
- 
-         if(!glow||!inner)return;
- 
-         window.addEventListener("mousemove",function(e){
- 
-             glow.style.opacity="1";
- 
-             inner.style.transform="translate3d("+(e.clientX-210)+"px,"+(e.clientY-210)+"px,0)";
- 
-         });
- 
-     })();
- 
- </script>
+
+      (function(){
+
+          var glow=document.querySelector(".cursor-glow"),inner=document.querySelector(".cursor-glow-inner");
+
+          if(!glow||!inner)return;
+
+          window.addEventListener("mousemove",function(e){
+
+              glow.style.opacity="1";
+
+              inner.style.transform="translate3d("+(e.clientX-210)+"px,"+(e.clientY-210)+"px,0)";
+
+          });
+
+      })();
+
+  </script>
 </body>
 </html>
 
