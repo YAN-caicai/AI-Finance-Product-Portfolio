@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>财务报销合规助手 · 原型</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-page: #f5f6f8;
+      --bg-card: #ffffff;
+      --border-subtle: #e2e4e8;
+      --text-main: #1d1f23;
+      --text-muted: #757b87;
+      --accent: #1f6feb;
+      --accent-soft: #e6f0ff;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.08);
+
+      --success-bg: #e7f7ef;
+      --success-text: #16784e;
+      --warning-bg: #fff3e4;
+      --warning-text: #b45309;
+      --error-bg: #ffe7e7;
+      --error-text: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #f9fafb 0, #eff1f5 40%, #e5e7eb 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 960px;
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      padding: 24px 26px 26px;
+    }
+
+    .shell-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .shell-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .shell-title-main {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .shell-title-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(248, 250, 252, 0.7);
+      color: var(--text-muted);
+    }
+
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #22c55e, #16a34a);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.18);
+    }
+
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+      align-items: stretch;
+    }
+
+    .input-shell {
+      position: relative;
+      flex: 1 1 260px;
+      display: flex;
+      align-items: center;
+      background: #f9fafb;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px 8px 38px;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .input-shell.focused {
+      background: #ffffff;
+      border-color: rgba(31, 111, 235, 0.7);
+      box-shadow: 0 0 0 1px rgba(31, 111, 235, 0.2);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      font-size: 14px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .input-shell input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    .input-shell input::placeholder {
+      color: #a0a5b3;
+    }
+
+    .btn-primary {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 10% 0, #60a5fa, #1d4ed8);
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        filter 0.12s ease;
+      min-height: 38px;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.55);
+      filter: brightness(1.03);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.38);
+      filter: brightness(0.98);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-primary span.icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.16);
+      font-size: 11px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .meta-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-label-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #9ca3af;
+    }
+
+    .confidence-tag {
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.08);
+      color: #15803d;
+      border: 1px solid rgba(34, 197, 94, 0.28);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .confidence-tag span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #4ade80, #16a34a);
+    }
+
+    .audit-card {
+      border-radius: var(--radius-lg);
+      background: var(--bg-card);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .audit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .audit-title {
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .audit-title-pill {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: var(--text-muted);
+    }
+
+    .audit-input-echo {
+      font-size: 11px;
+      color: var(--text-muted);
+      border-radius: 8px;
+      background: #f9fafb;
+      padding: 6px 9px;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      display: none;
+    }
+
+    .audit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 12px;
+        align-items: flex-start;
+      }
+      .shell {
+        padding: 18px 16px 18px;
+        border-radius: 22px;
+      }
+      .audit-grid {
+        grid-template-columns: 1fr;
+      }
+      .input-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn-primary {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    .pill {
+      border-radius: var(--radius-md);
+      padding: 8px 10px;
+      font-size: 11px;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pill-label {
+      font-weight: 500;
+    }
+
+    .pill-sub {
+      font-size: 10px;
+      opacity: 0.85;
+    }
+
+    .pill-success {
+      background: var(--success-bg);
+      color: var(--success-text);
+    }
+
+    .pill-warning {
+      background: var(--warning-bg);
+      color: var(--warning-text);
+    }
+
+    .pill-error {
+      background: var(--error-bg);
+      color: var(--error-text);
+    }
+
+    .pill-muted {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .empty-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 10px 0 2px;
+    }
+
+    .empty-hint span {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono", "Courier New", monospace;
+      background: rgba(15, 23, 42, 0.04);
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="shell-header">
+      <div class="shell-title">
+        <div class="shell-title-main">财务报销合规助手 · 原型</div>
+        <div class="shell-title-sub">Demo 区域 · 本地模拟审计逻辑（无联网，无真实报销数据）</div>
+      </div>
+      <div class="chip">
+        <span class="chip-dot"></span>
+        内测 · Finance Ops
+      </div>
+    </header>
+
+    <section class="input-row">
+      <div class="input-shell" id="input-shell">
+        <span class="input-icon">🔍</span>
+        <input
+          id="expense-input"
+          type="text"
+          placeholder="输入报销内容，例如：上海出差晚餐费650元..."
+          autocomplete="off"
+        />
+      </div>
+      <button id="audit-button" class="btn-primary">
+        <span class="icon">AI</span>
+        <span>AI 合规审计</span>
+      </button>
+    </section>
+
+    <section class="meta-row">
+      <div class="meta-label">
+        <span class="meta-label-dot"></span>
+        <span>审计逻辑拆解 · 模拟版</span>
+      </div>
+      <div class="confidence-tag">
+        <span class="dot"></span>
+        <span>AI 置信度：98%</span>
+      </div>
+    </section>
+
+    <section class="audit-card">
+      <header class="audit-header">
+        <div class="audit-title">
+          审计逻辑拆解
+          <span class="audit-title-pill">A/B/C 三段式</span>
+        </div>
+      </header>
+
+      <div id="audit-input-echo" class="audit-input-echo"></div>
+
+      <div id="audit-grid" class="audit-grid">
+        <div class="pill pill-muted">
+          <div class="pill-label">逻辑 A · 合规性检查</div>
+          <div class="pill-sub">等待输入示例，如“上海出差晚餐费650元”</div>
+        </div>
+        <div class="pill pill-muted">
+          <div class="pill-label">逻辑 B · 关键要素检查</div>
+          <div class="pill-sub">地点、金额、事由等维度将被拆解预览</div>
+        </div>
+        <div class="pill pill-muted">
+          <div class="pill-label">逻辑 C · 策略建议</div>
+          <div class="pill-sub">结合 A/B 结果给出 AI 建议话术</div>
+        </div>
+      </div>
+
+      <div class="empty-hint">
+        输入任意一条拟报销说明并点击 <span>AI 合规审计</span>，即可看到 A/B/C 逻辑拆解效果。
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const input = document.getElementById("expense-input");
+      const button = document.getElementById("audit-button");
+      const grid = document.getElementById("audit-grid");
+      const inputEcho = document.getElementById("audit-input-echo");
+      const inputShell = document.getElementById("input-shell");
+
+      input.addEventListener("focus", () => {
+        inputShell.classList.add("focused");
+      });
+
+      input.addEventListener("blur", () => {
+        inputShell.classList.remove("focused");
+      });
+
+      function parseAmount(text) {
+        if (!text) return null;
+        const numMatches = text.match(/(\d+(?:\.\d+)?)/g);
+        if (!numMatches || numMatches.length === 0) return null;
+        const value = parseFloat(numMatches[numMatches.length - 1]);
+        return isNaN(value) ? null : value;
+      }
+
+      function includesAny(text, keywords) {
+        if (!text) return false;
+        return keywords.some((k) => text.includes(k));
+      }
+
+      function analyze(text) {
+        const normalized = (text || "").trim();
+        const amount = parseAmount(normalized);
+        const hasMeal = includesAny(normalized, ["餐饮", "晚餐", "午餐", "早餐", "聚餐", "工作餐", "餐费"]);
+        const hasLocation = includesAny(normalized, ["北京", "上海", "广州", "深圳", "杭州", "南京", "成都", "武汉", "西安"]);
+
+        const result = {
+          logicA: {
+            triggered: false,
+            type: "success",
+            label: "逻辑 A · 合规性检查",
+            detail: "",
+          },
+          logicB: {
+            triggered: false,
+            type: "success",
+            label: "逻辑 B · 关键要素检查",
+            detail: "",
+          },
+          logicC: {
+            type: "success",
+            label: "逻辑 C · 策略建议",
+            detail: "",
+          },
+          meta: {
+            amount,
+            hasMeal,
+            hasLocation,
+          },
+        };
+
+        // 逻辑 A：金额 > 500 且包含“餐饮”
+        if (amount != null && amount > 500 && hasMeal) {
+          result.logicA.triggered = true;
+          result.logicA.type = "warning";
+          result.logicA.detail = "⚠️ 检测到餐饮类报销金额超过 500 元，触发超标预警，可根据内部差旅/餐饮标准进一步核对。";
+        } else if (!normalized) {
+          result.logicA.type = "muted";
+          result.logicA.detail = "等待输入示例，如“上海出差晚餐费650元”。";
+        } else {
+          result.logicA.type = "success";
+          if (hasMeal && amount != null) {
+            result.logicA.detail = "✅ 餐饮报销金额未超过 500 元，初步视为在标准范围内。";
+          } else if (!hasMeal && amount != null) {
+            result.logicA.detail = "✅ 当前说明未识别为餐饮类费用，不触发该规则超标检查。";
+          } else {
+            result.logicA.detail = "ℹ️ 未能稳定解析金额或费用类型，该规则暂不触发预警。";
+          }
+        }
+
+        // 逻辑 B：是否包含地点信息
+        if (!normalized) {
+          result.logicB.type = "muted";
+          result.logicB.detail = "地点、金额、事由等维度将在输入后自动拆解预览。";
+        } else if (!result.meta.hasLocation) {
+          result.logicB.triggered = true;
+          result.logicB.type = "error";
+          result.logicB.detail = "❌ 未识别到城市信息（如北京、上海等），建议补充出差城市或发生地点，便于差旅与预算核对。";
+        } else {
+          result.logicB.type = "success";
+          result.logicB.detail = "✅ 已识别到城市信息，可支持后续行程核对与预算归集。";
+        }
+
+        // 逻辑 C：策略建议，根据 A/B 组合
+        const issues = [];
+        if (result.logicA.type === "warning") issues.push("amountMeal");
+        if (result.logicB.type === "error") issues.push("locationMissing");
+
+        if (!normalized) {
+          result.logicC.type = "muted";
+          result.logicC.detail =
+            "示例：可引导员工按照“城市 + 事由 + 金额”统一格式填写，例如“上海出差·客户晚餐 650 元”。";
+        } else if (issues.length === 0) {
+          result.logicC.type = "success";
+          result.logicC.detail =
+            "从当前说明看，关键要素相对完整，且未触发明显超标风险。建议后续结合发票抬头、行程单和预算维度再做一次集中抽样审计。";
+        } else if (issues.includes("amountMeal") && issues.includes("locationMissing")) {
+          result.logicC.type = "error";
+          result.logicC.detail =
+            "建议：① 补充出差城市或费用发生地点；② 请员工确认该餐饮费用是否按公司餐饮标准拆分或合并报销；③ 如为客户接待，请补充接待对象及场景说明，便于后续抽查。";
+        } else if (issues.includes("amountMeal")) {
+          result.logicC.type = "warning";
+          result.logicC.detail =
+            "建议重点关注该餐饮费用是否在公司差旅/餐饮标准范围内，可在系统中增加自动封顶规则，超标部分提示员工自行承担或走审批加签。";
+        } else if (issues.includes("locationMissing")) {
+          result.logicC.type = "warning";
+          result.logicC.detail =
+            "建议在报销单模板中将“发生城市/出差城市”设为必填字段，减少后续财务补资料的沟通成本，并支持预算按城市维度做分析。";
+        }
+
+        return result;
+      }
+
+      function createPill(type, label, detail) {
+        const div = document.createElement("div");
+        let cls = "pill ";
+        switch (type) {
+          case "success":
+            cls += "pill-success";
+            break;
+          case "warning":
+            cls += "pill-warning";
+            break;
+          case "error":
+            cls += "pill-error";
+            break;
+          case "muted":
+          default:
+            cls += "pill-muted";
+            break;
+        }
+        div.className = cls;
+
+        const title = document.createElement("div");
+        title.className = "pill-label";
+        title.textContent = label;
+
+        const sub = document.createElement("div");
+        sub.className = "pill-sub";
+        sub.textContent = detail;
+
+        div.appendChild(title);
+        div.appendChild(sub);
+        return div;
+      }
+
+      function render(normalizedText, analysis) {
+        while (grid.firstChild) {
+          grid.removeChild(grid.firstChild);
+        }
+
+        if (!normalizedText) {
+          inputEcho.style.display = "none";
+        } else {
+          inputEcho.style.display = "block";
+          inputEcho.textContent = "当前待审计说明：" + normalizedText;
+        }
+
+        const a = analysis.logicA;
+        const b = analysis.logicB;
+        const c = analysis.logicC;
+
+        grid.appendChild(createPill(a.type, a.label, a.detail));
+        grid.appendChild(createPill(b.type, b.label, b.detail));
+        grid.appendChild(createPill(c.type, c.label, c.detail));
+      }
+
+      function handleAudit() {
+        const raw = input.value || "";
+        const normalized = raw.trim();
+
+        button.disabled = true;
+
+        setTimeout(() => {
+          const result = analyze(normalized);
+          render(normalized, result);
+          button.disabled = false;
+        }, 260); // 模拟 AI 思考延迟
+      }
+
+      button.addEventListener("click", handleAudit);
+      input.addEventListener("keydown", (evt) => {
+        if (evt.key === "Enter") {
+          evt.preventDefault();
+          handleAudit();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>王桐瑶 | AI 产品经理</title>
+  <style>
+    :root {
+      /* Sunrise-inspired palette */
+      --bg: #fff7ed; /* 柔和日出背景 */
+      --fg: #1f1308;
+      --muted: #8b5e3c;
+      --accent: #ea580c;
+      --accent-soft: #ffedd5;
+      --accent-soft-strong: #fed7aa;
+      --border-subtle: #fed7aa;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.06);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      letter-spacing: 0.03em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 40px 16px 72px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 980px;
+    }
+
+    section {
+      margin-bottom: 56px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      white-space: nowrap;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 2.2fr);
+      gap: 40px;
+      padding: 32px 32px 36px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      background: #f0e5d8;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hero-tag {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 3.2vw, 34px);
+      font-weight: 600;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .hero-profile {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      background: #fbf6f0;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    .hero-profile-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .hero-profile-main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      font-size: 13px;
+      color: var(--fg);
+    }
+
+    .hero-profile-main strong {
+      font-weight: 600;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hero-meta span {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 131, 110, 0.5);
+      background: rgba(253, 250, 245, 0.95);
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(191, 170, 145, 0.7);
+      background: #faf3ea;
+      padding: 20px 18px 18px;
+    }
+
+    .hero-right-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .hero-right-main {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .hero-phase {
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--muted);
+      padding: 8px 8px 10px;
+      border-radius: 8px;
+      background: #f5e9da;
+    }
+
+    .hero-phase-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .hero-phase-title span {
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    .hero-phase-body {
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .hero-right-footer {
+      display: flex;
+      justify-content: flex-start;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hero-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.18);
+      align-self: center;
+    }
+
+    /* Core competencies */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card-compact {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: #f6eee4;
+      padding: 16px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .card-body {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: #f7ecdd;
+      padding: 16px 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .project-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .project-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .project-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .project-meta {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+    }
+
+    .project-meta span {
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+    }
+
+    .project-body {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      padding: 7px 16px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 90, 58, 0.9);
+      background: radial-gradient(circle at 10% 0, #b07a4a, #7a5a3a);
+      box-shadow: 0 10px 24px rgba(122, 90, 58, 0.45);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #ffffff;
+      cursor: pointer;
+      transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.16s ease,
+        box-shadow 0.22s ease,
+        filter 0.16s ease;
+    }
+
+    .project-link-arrow {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.16s ease, transform 0.16s ease;
+      font-size: 12px;
+    }
+
+    .project-link:hover {
+      background: radial-gradient(circle at 10% 0, #c4874f, #8a5f37);
+      border-color: rgba(122, 90, 58, 1);
+      transform: translateY(-1px) scale(1.03);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.26);
+      filter: brightness(1.03);
+    }
+
+    .project-link:hover .project-link-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Shared card hover interaction */
+    .card-elevated {
+      transition:
+        transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+        box-shadow 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
+        background-color 0.35s ease;
+      will-change: transform, box-shadow;
+    }
+
+    .card-elevated:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
+    }
+
+    /* Ambient cursor glow */
+    .cursor-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      mix-blend-mode: soft-light;
+    }
+
+    .cursor-glow-inner {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 999px;
+      background: radial-gradient(circle at center, rgba(0, 122, 255, 0.08), rgba(0, 122, 255, 0));
+      transform: translate3d(-9999px, -9999px, 0);
+      transition:
+        transform 0.25s ease-out,
+        opacity 0.4s ease-out;
+      opacity: 0.85;
+    }
+
+    /* Projects & skills */
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .skill-pill {
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+    }
+
+    .skills-note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    footer span {
+      white-space: nowrap;
+    }
+
+    /* Message Board Styles */
+    .message-board {
+      background: linear-gradient(135deg, #fbf6f0, #f0e5d8);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 24px;
+    }
+
+    .message-form {
+      margin-bottom: 32px;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      flex: 1 1 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full-width {
+      flex: 1 1 100%;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--fg);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      color: var(--fg);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .message-submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      background: radial-gradient(circle at 10% 0, var(--accent), #c2410c);
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(234, 88, 12, 0.35);
+      transition: transform 0.14s ease, box-shadow 0.18s ease, filter 0.14s ease;
+    }
+
+    .message-submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(234, 88, 12, 0.45);
+      filter: brightness(1.05);
+    }
+
+    .message-submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 9px 18px rgba(234, 88, 12, 0.35);
+      filter: brightness(0.97);
+    }
+
+    .messages-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message-item {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      padding: 16px;
+      transition: transform 0.14s ease, box-shadow 0.14s ease;
+    }
+
+    .message-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .message-nickname {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .message-time {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .message-content {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--fg);
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding-top: 24px;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 22px 18px 22px;
+      }
+
+      .hero-right {
+        order: -1;
+      }
+
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .message-board {
+        padding: 18px;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .form-group {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-glow" aria-hidden="true">
+    <div class="cursor-glow-inner"></div>
+  </div>
+  <main>
+    <!-- Hero -->
+    <section aria-labelledby="hero-title">
+      <div class="hero card-elevated">
+        <div class="hero-left">
+          <div class="hero-tag">王桐瑶 · AI Product Manager</div>
+          <h1 id="hero-title" class="hero-title">王桐瑶 | AI 产品经理</h1>
+          <div class="hero-profile">
+            <div class="hero-profile-label">Profile · 个人信息</div>
+            <div class="hero-profile-main">
+              <span><strong>姓名：</strong>王桐瑶</span>
+              <span><strong>出生年月：</strong>2004.01.22</span>
+              <span><strong>毕业院校：</strong>陕西科技大学</span>
+              <span><strong>专业：</strong>会计学</span>
+              <span><strong>邮箱：</strong>1011768087@qq.com</span>
+            </div>
+          </div>
+          <p class="hero-subtitle">
+            深耕财务逻辑，驱动 AI 落地。擅长利用 Vibe Coding 快速构建业务原型。
+          </p>
+          <div class="hero-meta">
+            <span>会计背景 · 财务审计思维</span>
+            <span>AI 产品策略 &amp; 原型</span>
+          </div>
+        </div>
+        <aside class="hero-right" aria-label="王桐瑶 的工作方式">
+          <div class="hero-right-label">Working Frame · 从逻辑到价值</div>
+          <div class="hero-right-main">
+            <div class="hero-phase">
+              <div class="hero-phase-title">Phase 01 · <span>业务逻辑解构</span></div>
+              <div class="hero-phase-body">
+                将复杂、非标的业务诉求抽象为标准化的底层逻辑模型。
+                凭借对合规性与严谨性的天然敏感，精准定义 AI 的边界条件与业务规则，
+                让产品在立项阶段就具备可落地的确定性。
+              </div>
+            </div>
+            <div class="hero-phase">
+              <div class="hero-phase-title">Phase 02 · <span>敏捷原型实现</span></div>
+              <div class="hero-phase-body">
+                利用 Cursor、Dify 等前沿 AI 工具链，跨越传统开发周期，
+                实现“想法到原型”的分钟级转化；通过持续迭代 Prompt Engineering，
+                在关键业务场景中跑通 AI 的逻辑闭环。
+              </div>
+            </div>
+            <div class="hero-phase">
+              <div class="hero-phase-title">Phase 03 · <span>价值闭环评估</span></div>
+              <div class="hero-phase-body">
+                建立多维度的 AI 输出评价体系，不只看模型指标，
+                更关注成本节约、效率提升与风险控制的量化结果，
+                以数据驱动产品策略与版本迭代。
+              </div>
+            </div>
+          </div>
+          <div class="hero-right-footer">
+            <div class="hero-dot"></div>
+            <div>偏好用“小步快跑 + 严谨复盘”的方式，与团队共建 AI 产品。</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Core Competencies -->
+    <section aria-labelledby="core-title">
+      <div class="section-header">
+        <div class="section-title" id="core-title">Core Competencies</div>
+        <div class="section-subtitle">竞争优势 · 直击决策痛点</div>
+      </div>
+      <div class="grid-3">
+        <article class="card-compact card-elevated">
+          <div class="card-label">01 · 财务级严谨逻辑</div>
+          <h2 class="card-title">把“会计准则”变成 Prompt 约束</h2>
+          <p class="card-body">
+            将会计准则、内控制度拆解为结构化规则，融入 Prompt 工程与评测集。
+            重点关注“边界场景”和“例外处理”，提升 AI 输出的确定性与可追溯性。
+          </p>
+        </article>
+        <article class="card-compact card-elevated">
+          <div class="card-label">02 · 全栈原型交付</div>
+          <h2 class="card-title">从概念到可跑通的 MVP</h2>
+          <p class="card-body">
+            熟练调动 Cursor、Dify、Coze 等 AI 工具，以 Vibe Coding 方式快速搭建业务原型，
+            在有限资源下验证需求、还原关键业务路径。
+          </p>
+        </article>
+        <article class="card-compact card-elevated">
+          <div class="card-label">03 · 复杂业务逻辑建模者</div>
+          <h2 class="card-title">复杂业务逻辑建模者</h2>
+          <p class="card-body">
+            擅长将高复杂度、强合规性的业务场景拆解为 AI 可执行的逻辑结构与数据工作流。
+            通过精准的需求定义，大幅降低技术开发中的理解偏差与迭代成本。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Projects (作品集) -->
+    <section aria-labelledby="projects-title">
+      <div class="section-header">
+        <div class="section-title" id="projects-title">Selected Work</div>
+        <div class="section-subtitle">作品集 · AI 产品实践</div>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card card-elevated">
+          <div class="project-title-row">
+            <h2 class="project-title">财务报销合规助手 · 原型</h2>
+            <div class="project-tag">Internal Tool · MVP</div>
+          </div>
+          <div class="project-meta">
+            <span>角色：AI PM / 逻辑设计</span>
+            <span>关键词：报销 · 合规规则 · 多轮对话</span>
+          </div>
+          <p class="project-body">
+            将传统报销制度拆解为“场景 + 金额区间 + 例外条件”的规则网，设计可被 AI
+            调用的判断路径与提示文案，帮助财务前台在录入阶段就发现高风险报销。
+          </p>
+          <a
+            class="project-link"
+            href="demo.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>查看 Demo</span>
+            <span class="project-link-arrow">→</span>
+          </a>
+        </article>
+
+        <article class="project-card card-elevated">
+          <div class="project-title-row">
+            <h2 class="project-title">财务知识问答 Copilot · 流程设计</h2>
+            <div class="project-tag">Knowledge · RAG</div>
+          </div>
+          <div class="project-meta">
+            <span>角色：AI PM / Prompt 设计</span>
+            <span>关键词：会计准则 · 制度文档 · 检索</span>
+          </div>
+          <p class="project-body">
+            围绕“会计准则、内部制度、常见问答”搭建知识结构，规划检索维度与回答模板，
+            让非技术同事也能通过自然语言获取稳定、一致的财务答复。
+          </p>
+          <a
+            class="project-link"
+            href="copilot.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>查看流程原型</span>
+            <span class="project-link-arrow">→</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Projects & Skills -->
+    <section aria-labelledby="skills-title">
+      <div class="section-header">
+        <div class="section-title" id="skills-title">Projects &amp; Skills</div>
+        <div class="section-subtitle">工具栈 · 能力标签</div>
+      </div>
+      <article class="card-compact card-elevated">
+        <div class="card-label">能力映射</div>
+        <h2 class="card-title">从财务专业到 AI PM 的可迁移资产</h2>
+        <div class="skills-row">
+          <span class="skill-pill">Cursor · Vibe Coding 思维</span>
+          <span class="skill-pill">Prompt Engineering（中文/英文）</span>
+          <span class="skill-pill">RAG 流程设计与评估</span>
+          <span class="skill-pill">财务报销 / 审计逻辑设计</span>
+          <span class="skill-pill">多轮对话流程编排</span>
+          <span class="skill-pill">与财务/业务团队的需求访谈</span>
+        </div>
+        <p class="skills-note">
+          希望未来与你一起，搭建更多“有边界感、可验证、能上线”的 AI 产品。
+          如果你正在做财务数字化、AI 办公助手或内部知识库类产品，欢迎把我当作
+          <strong>深入理解财务逻辑的 AI PM 候选人</strong> 来看待。
+        </p>
+      </article>
+    </section>
+
+    <!-- Message Board -->
+    <section aria-labelledby="message-board-title">
+      <div class="section-header">
+        <div class="section-title" id="message-board-title">留言板</div>
+        <div class="section-subtitle">欢迎留下你的想法</div>
+      </div>
+      <div class="message-board">
+        <form id="message-form" class="message-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nickname">昵称</label>
+              <input type="text" id="nickname" name="nickname" placeholder="请输入你的昵称" required>
+            </div>
+            <div class="form-group full-width">
+              <label for="content">留言内容</label>
+              <textarea id="content" name="content" placeholder="请输入你的留言" required rows="3"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary message-submit-btn">
+            <span>提交</span>
+          </button>
+        </form>
+        <div id="messages-container" class="messages-container">
+          <!-- Messages will be rendered here -->
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>王桐瑶 · AI 产品经理</span>
+      <span>1011768087@qq.com</span>
+    </footer>
+  </main>
+
+  <!-- Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <script>
+    // Initialize Supabase
+    const supabaseUrl = 'https://lgdvaltheangnlsjjtpb.supabase.co';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxnZHZhbHRoZWFuZ25sc2pqdHBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNzA3NTIsImV4cCI6MjA4NzY0Njc1Mn0.73pWzCGVNj0LoIaCC5NIKfvXqzLu-oqak1QbMaSDIXA';
+    const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+    // DOM Elements
+    const messageForm = document.getElementById('message-form');
+    const nicknameInput = document.getElementById('nickname');
+    const contentInput = document.getElementById('content');
+    const messagesContainer = document.getElementById('messages-container');
+
+    // Format date to YYYY-MM-DD HH:MM
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+
+    // Render messages
+    async function renderMessages() {
+      try {
+        const { data: messages, error } = await supabase
+          .from('messages')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error fetching messages:', error);
+          return;
+        }
+
+        messagesContainer.innerHTML = messages.map(message => `
+          <div class="message-item">
+            <div class="message-header">
+              <div class="message-nickname">${message.nickname}</div>
+              <div class="message-time">${formatDate(message.created_at)}</div>
+            </div>
+            <div class="message-content">${message.content}</div>
+          </div>
+        `).join('');
+      } catch (error) {
+        console.error('Error rendering messages:', error);
+      }
+    }
+
+    // Handle form submission
+    messageForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nickname = nicknameInput.value.trim();
+      const content = contentInput.value.trim();
+
+      if (!nickname || !content) {
+        return;
+      }
+
+      try {
+        const { error } = await supabase
+          .from('messages')
+          .insert({ nickname, content });
+
+        if (error) {
+          console.error('Error submitting message:', error);
+          return;
+        }
+
+        // Clear form inputs
+        nicknameInput.value = '';
+        contentInput.value = '';
+
+        // Re-render messages
+        await renderMessages();
+      } catch (error) {
+        console.error('Error submitting message:', error);
+      }
+    });
+
+    // Load messages on page load
+    renderMessages();
+
+    // Existing script
+    
+    (function () {
+      var glow = document.querySelector(".cursor-glow");
+      var inner = document.querySelector(".cursor-glow-inner");
+      if (!glow || !inner) return;
+
+      var ticking = false;
+
+      function updatePosition(x, y) {
+        var size = 420;
+        inner.style.transform =
+          "translate3d(" + (x - size / 2) + "px, " + (y - size / 2) + "px, 0)";
+      }
+
+      window.addEventListener("mousemove", function (e) {
+        glow.style.opacity = "1";
+
+        var x = e.clientX;
+        var y = e.clientY;
+
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            updatePosition(x, y);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      window.addEventListener("mouseout", function (e) {
+        if (!e.relatedTarget && !e.toElement) {
+          glow.style.opacity = "0";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+
