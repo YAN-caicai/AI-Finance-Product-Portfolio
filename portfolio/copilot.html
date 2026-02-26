@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>财务知识问答 Copilot · 流程原型</title>
+  <style>
+    :root {
+      /* Sunrise palette，与简历主页保持统一的暖色系 */
+      --bg: #fff7ed;
+      --bg-soft: #fffbeb;
+      --bg-elevated: #fffbeb;
+      --bg-chat: #fff7ed;
+      --bg-sidebar: #fff7ed;
+      --bg-bubble-user: #fed7aa;
+      --bg-bubble-ai: #ffedd5;
+      --border-subtle: #fed7aa;
+      --border-strong: #f97316;
+      --accent: #ea580c;
+      --accent-soft: #ffedd5;
+      --accent-strong: #f97316;
+      --fg: #1f1308;
+      --fg-muted: #a16207;
+      --fg-soft: #b45309;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 22px 60px rgba(15, 23, 42, 0.85);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #fee2b7 0, #fffbeb 40%, #fff7ed 100%);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      letter-spacing: 0.02em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 12px 40px;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: slide-fade-in 0.7s cubic-bezier(0.23, 0.86, 0.32, 1) forwards;
+    }
+
+    @keyframes slide-fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    main {
+      width: 100%;
+      max-width: 1120px;
+      border-radius: 26px;
+      background: radial-gradient(circle at top left, #fffbeb 0, #fff7ed 45%, #fed7aa 100%);
+      border: 1px solid rgba(248, 191, 120, 0.9);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px 10px;
+      border-bottom: 1px solid rgba(248, 191, 120, 0.9);
+      background: radial-gradient(circle at top left, #ffedd5, #fed7aa);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 191, 120, 0.9);
+      background: rgba(255, 249, 235, 0.96);
+      transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.14s ease,
+        box-shadow 0.22s ease;
+    }
+
+    .back-link span.icon {
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      background: #fed7aa;
+      color: var(--fg);
+      border-color: rgba(248, 191, 120, 1);
+      box-shadow: 0 0 0 1px rgba(248, 191, 120, 0.8), 0 12px 30px rgba(248, 191, 120, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .top-title {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      text-align: right;
+    }
+
+    .top-title-main {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--fg-muted);
+    }
+
+    .top-title-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1.7fr) 260px;
+      min-height: 520px;
+      background: radial-gradient(circle at top left, #fffbeb, #fff7ed 55%, #fed7aa 100%);
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, #fffbeb, #fff7ed 70%, #fed7aa 100%);
+      padding: 16px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .sidebar-title {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-soft);
+    }
+
+    .sidebar-note {
+      font-size: 11px;
+      color: var(--fg-muted);
+    }
+
+    .history-list {
+      margin: 4px 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .history-item {
+      border-radius: 999px;
+      padding: 7px 10px;
+      border: 1px solid rgba(248, 191, 120, 0.85);
+      background: radial-gradient(circle at top left, #fffbeb, #fed7aa);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .history-item-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .history-item-pill {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(254, 215, 170, 0.9);
+      color: #9a3412;
+    }
+
+    .history-hint {
+      margin-top: 6px;
+      font-size: 10px;
+      color: var(--fg-soft);
+    }
+
+    .chat-area {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top center, #fffbeb, #fff7ed 55%, #fed7aa 100%);
+    }
+
+    .chat-header {
+      padding: 14px 18px 10px;
+      border-bottom: 1px solid rgba(248, 191, 120, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-header-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .chat-header-main {
+      font-size: 15px;
+      font-weight: 550;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .chat-header-sub {
+      font-size: 11px;
+      color: var(--fg-soft);
+    }
+
+    .status-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 191, 120, 0.9);
+      background: rgba(255, 249, 235, 0.95);
+      color: #b45309;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f97316, #ea580c);
+      box-shadow: 0 0 0 3px rgba(248, 191, 120, 0.5);
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 16px 18px 80px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .chat-messages {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 13px;
+    }
+
+    .msg-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .msg-row.user {
+      justify-content: flex-end;
+    }
+
+    .msg-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, #38bdf8, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #eff6ff;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 1);
+    }
+
+    .msg-avatar.user {
+      background: radial-gradient(circle at top, #4ade80, #15803d);
+    }
+
+    .msg-bubble {
+      max-width: 76%;
+      border-radius: 14px;
+      padding: 9px 11px 9px;
+      line-height: 1.6;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-bubble-ai);
+      color: var(--fg);
+      position: relative;
+    }
+
+    .msg-row.user .msg-bubble {
+      background: var(--bg-bubble-user);
+      border-color: rgba(37, 99, 235, 0.7);
+    }
+
+    .msg-meta {
+      margin-top: 4px;
+      font-size: 10px;
+      color: var(--fg-soft);
+    }
+
+    .typing-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      color: var(--fg-soft);
+      margin-top: 4px;
+    }
+
+    .typing-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+      animation: typing-bounce 1s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes typing-bounce {
+      0%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+      }
+      40% {
+        transform: translateY(-3px);
+        opacity: 1;
+      }
+    }
+
+    .chat-input-shell {
+      position: absolute;
+      inset-inline: 0;
+      bottom: 0;
+      padding: 10px 18px 12px;
+      background: linear-gradient(to top, rgba(255, 247, 237, 0.98), rgba(255, 247, 237, 0.82), transparent);
+      border-top: 1px solid rgba(248, 191, 120, 0.95);
+    }
+
+    .chat-input-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fffbeb;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 191, 120, 0.95);
+      padding: 8px 10px 8px 14px;
+    }
+
+    .chat-input-prefix {
+      font-size: 11px;
+      color: var(--fg-soft);
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(255, 247, 237, 0.96);
+      border: 1px solid rgba(248, 191, 120, 0.9);
+      white-space: nowrap;
+    }
+
+    .chat-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--fg);
+      font-size: 13px;
+    }
+
+    .chat-input::placeholder {
+      color: var(--fg-soft);
+    }
+
+    .chat-send-btn {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 6px 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: radial-gradient(circle at top, #fdba74, #f97316);
+      color: #3b1302;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 24px rgba(234, 88, 12, 0.35);
+      transition:
+        transform 0.14s ease,
+        box-shadow 0.18s ease,
+        filter 0.14s ease;
+    }
+
+    .chat-send-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(234, 88, 12, 0.45);
+      filter: brightness(1.05);
+    }
+
+    .chat-send-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 9px 18px rgba(234, 88, 12, 0.35);
+      filter: brightness(0.97);
+    }
+
+    .flow-panel {
+      padding: 16px 14px 16px;
+      background: radial-gradient(circle at top right, #fffbeb, #fff7ed 65%, #fed7aa 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .flow-title {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--fg-soft);
+    }
+
+    .flow-subtitle {
+      font-size: 11px;
+      color: var(--fg-muted);
+    }
+
+    .flow-nodes {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--fg-muted);
+    }
+
+    .flow-node-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .flow-node {
+      flex: 1;
+      border-radius: 999px;
+      padding: 6px 10px;
+      border: 1px solid rgba(248, 191, 120, 0.9);
+      background: rgba(255, 249, 235, 0.96);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .flow-node-label {
+      font-size: 11px;
+      color: var(--fg);
+    }
+
+    .flow-node-sub {
+      font-size: 10px;
+      color: var(--fg-soft);
+    }
+
+    .flow-arrow {
+      flex-shrink: 0;
+      font-size: 13px;
+      color: var(--accent-strong);
+    }
+
+    .flow-footnote {
+      margin-top: 8px;
+      font-size: 10px;
+      color: var(--fg-soft);
+    }
+
+    @media (max-width: 960px) {
+      main {
+        border-radius: 0;
+      }
+
+      .layout {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding-block: 12px;
+      }
+
+      .chat-area {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .flow-panel {
+        padding-top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="top-bar">
+      <a class="back-link" href="index.html">
+        <span class="icon">←</span>
+        <span>返回主页</span>
+      </a>
+      <div class="top-title">
+        <div class="top-title-main">Finance Compliance Copilot</div>
+        <div class="top-title-sub">从制度到对话 · 财务知识问答流程原型</div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="历史问答记录">
+        <div>
+          <div class="sidebar-title">History · 历史问答记录</div>
+          <p class="sidebar-note">模拟展示典型财务咨询场景，支持后续接入真实日志。</p>
+        </div>
+        <ul class="history-list">
+          <li class="history-item">
+            <span class="history-item-label">差旅费标准咨询 · 一类城市</span>
+            <span class="history-item-pill">Policy</span>
+          </li>
+          <li class="history-item">
+            <span class="history-item-label">发票开具规范 · 专票/普票区别</span>
+            <span class="history-item-pill">Invoice</span>
+          </li>
+          <li class="history-item">
+            <span class="history-item-label">报销进度查询 · 单号 2026-04-018</span>
+            <span class="history-item-pill">Status</span>
+          </li>
+          <li class="history-item">
+            <span class="history-item-label">业务招待费 · 合理区间判断</span>
+            <span class="history-item-pill">Risk</span>
+          </li>
+        </ul>
+        <div class="history-hint">
+          说明：当前为静态示例，真实环境中可按员工、部门、问题类型维度做聚合展示。
+        </div>
+      </aside>
+
+      <section class="chat-area" aria-label="财务合规 Copilot · 对话窗口">
+        <header class="chat-header">
+          <div class="chat-header-title">
+            <div class="chat-header-main">财务合规 Copilot · 流程助手</div>
+            <div class="chat-header-sub">围绕制度文档与问答模板构建稳定、可追溯的财务知识对话。</div>
+          </div>
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            流程引擎 · 在线模拟
+          </div>
+        </header>
+
+        <div class="chat-body">
+          <div class="chat-messages" id="chat-messages">
+            <div class="msg-row user">
+              <div class="msg-bubble">
+                北京出差的住宿报销标准是多少？
+                <div class="msg-meta">用户 · 来自桌面端 Copilot 入口</div>
+              </div>
+              <div class="msg-avatar user">ME</div>
+            </div>
+
+            <div class="msg-row" id="ai-message-row">
+              <div class="msg-avatar">AI</div>
+              <div class="msg-bubble">
+                <span id="ai-message-text"></span>
+                <div class="typing-indicator" id="typing-indicator">
+                  <span class="typing-dot"></span>
+                  <span class="typing-dot"></span>
+                  <span class="typing-dot"></span>
+                </div>
+                <div class="msg-meta">
+                  Copilot · 已按“城市层级 + 职级 + 制度版本号”完成匹配
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-shell">
+            <div class="chat-input-inner">
+              <div class="chat-input-prefix">AI 联想提示</div>
+              <input
+                class="chat-input"
+                type="text"
+                placeholder="例如：报销单可以混合差旅费和招待费吗？（本页面为原型，输入暂不触发真实对话）"
+                aria-label="输入要咨询的财务问题"
+              />
+              <button class="chat-send-btn" type="button">
+                <span>Send</span>
+                <span>↗</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="flow-panel" aria-label="流程节点图 · 决策逻辑">
+        <div>
+          <div class="flow-title">Flow · 流程节点图</div>
+          <div class="flow-subtitle">从“自然语言提问”到“合规结论”的内部决策路径。</div>
+        </div>
+        <div class="flow-nodes">
+          <div class="flow-node-row">
+            <div class="flow-node">
+              <div class="flow-node-label">用户输入</div>
+              <div class="flow-node-sub">北京出差的住宿报销标准是多少？</div>
+            </div>
+            <div class="flow-arrow">→</div>
+          </div>
+          <div class="flow-node-row">
+            <div class="flow-node">
+              <div class="flow-node-label">语义识别</div>
+              <div class="flow-node-sub">解析“城市=北京”“费用类型=住宿”“场景=出差”</div>
+            </div>
+            <div class="flow-arrow">→</div>
+          </div>
+          <div class="flow-node-row">
+            <div class="flow-node">
+              <div class="flow-node-label">调取制度库</div>
+              <div class="flow-node-sub">匹配《2026版差旅管理制度》+ 员工职级配置表</div>
+            </div>
+            <div class="flow-arrow">→</div>
+          </div>
+          <div class="flow-node-row">
+            <div class="flow-node">
+              <div class="flow-node-label">输出合规结论</div>
+              <div class="flow-node-sub">给出标准金额 + 预订渠道 + 补充提醒</div>
+            </div>
+          </div>
+        </div>
+        <div class="flow-footnote">
+          注：本节点图仅为概念展示，实际落地可拆分为模型调用、结构化规则引擎与日志留痕三层。
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var fullText =
+        "根据公司《2026版差旅管理制度》，北京属于一类城市，您的职级标准为 800 元/天。" +
+        " 建议优先选择携程商旅等统一预订渠道，以实现免垫付并保证发票抬头合规。";
+
+      var textEl = document.getElementById("ai-message-text");
+      var typingEl = document.getElementById("typing-indicator");
+      var index = 0;
+      var typingDelay = 26;
+
+      if (!textEl || !typingEl) return;
+
+      function typeNext() {
+        if (index >= fullText.length) {
+          typingEl.style.display = "none";
+          return;
+        }
+        textEl.textContent += fullText.charAt(index);
+        index += 1;
+        var delay = typingDelay + Math.random() * 40;
+        window.setTimeout(typeNext, delay);
+      }
+
+      window.setTimeout(typeNext, 500);
+    })();
+  </script>
+</body>
+</html>
