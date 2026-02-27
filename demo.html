@@ -6,17 +6,14 @@
   <title>财务报销合规助手 · Demo</title>
   <style>
     :root {
-      /* 与首页一致的日出色系 */
-      --bg: #fff7ed;
-      --fg: #1f1308;
-      --muted: #8b5e3c;
-      --accent: #ea580c;
-      --accent-soft: #ffedd5;
-      --accent-soft-strong: #fed7aa;
-      --border-subtle: #fed7aa;
+      /* 优化后的配色方案 */
+      --bg: #f9f9f9;
+      --fg: #333333;
+      --muted: #666666;
+      --border: #e0e0e0;
       --radius-lg: 16px;
-      --radius-md: 10px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.06);
+      --radius-md: 12px;
+      --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.08);
       --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
@@ -78,8 +75,8 @@
       color: var(--muted);
       padding: 6px 14px;
       border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      background: rgba(252, 248, 241, 0.9);
+      border: 1px solid var(--border);
+      background: #ffffff;
       transition: background 0.18s ease, transform 0.12s ease,
         box-shadow 0.18s ease, color 0.18s ease, border-color 0.18s ease;
     }
@@ -89,10 +86,10 @@
     }
 
     .back-link:hover {
-      background: #f0e5d8;
-      border-color: rgba(148, 131, 110, 0.9);
+      background: #f5f5f5;
+      border-color: var(--muted);
       color: var(--fg);
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.18);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transform: translateY(-1px);
     }
 
@@ -104,11 +101,11 @@
     }
 
     .demo-shell {
-      border-radius: 24px;
-      border: 1px solid var(--border-subtle);
-      background: linear-gradient(135deg, #fbf6f0, #f0e5d8);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: #ffffff;
       box-shadow: var(--shadow-soft);
-      padding: 22px 22px 24px;
+      padding: 24px;
     }
 
     .demo-header {
@@ -116,7 +113,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
 
     .demo-title {
@@ -141,11 +138,11 @@
       font-size: 11px;
       padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 131, 110, 0.6);
+      border: 1px solid var(--border);
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(253, 250, 245, 0.9);
+      background: #f5f5f5;
       color: var(--muted);
     }
 
@@ -160,8 +157,8 @@
     .input-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 20px;
       align-items: stretch;
     }
 
@@ -170,23 +167,23 @@
       flex: 1 1 260px;
       display: flex;
       align-items: center;
-      background: #fbf6f0;
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      padding: 8px 14px 8px 36px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 12px 16px 12px 40px;
       transition: border-color 0.18s ease, box-shadow 0.18s ease,
         background 0.18s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
     }
 
     .input-shell.focused {
-      background: #ffffff;
-      border-color: rgba(148, 131, 110, 0.9);
-      box-shadow: 0 0 0 1px rgba(148, 131, 110, 0.35);
+      border-color: var(--muted);
+      box-shadow: 0 0 0 2px rgba(102, 102, 102, 0.1);
     }
 
     .input-icon {
       position: absolute;
-      left: 14px;
+      left: 16px;
       font-size: 14px;
       color: var(--muted);
       pointer-events: none;
@@ -197,12 +194,12 @@
       outline: none;
       background: transparent;
       width: 100%;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--fg);
     }
 
     .input-shell input::placeholder {
-      color: #a5937e;
+      color: #999999;
     }
 
     .btn-primary {
@@ -211,31 +208,31 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      padding: 0 18px;
-      border-radius: 999px;
-      font-size: 13px;
+      padding: 0 20px;
+      border-radius: 12px;
+      font-size: 14px;
       font-weight: 500;
       border: none;
       cursor: pointer;
-      background: radial-gradient(circle at 10% 0, #b07a4a, #7a5a3a);
+      background: #888888;
       color: #ffffff;
-      box-shadow: 0 10px 22px rgba(122, 90, 58, 0.45);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.12s ease, box-shadow 0.12s ease,
-        filter 0.12s ease;
-      min-height: 38px;
+        background 0.18s ease;
+      min-height: 44px;
       white-space: nowrap;
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 14px 30px rgba(122, 90, 58, 0.6);
-      filter: brightness(1.03);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      background: #555555;
     }
 
     .btn-primary:active {
       transform: translateY(0);
-      box-shadow: 0 8px 18px rgba(122, 90, 58, 0.45);
-      filter: brightness(0.97);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background: #444444;
     }
 
     .btn-primary:disabled {
@@ -252,15 +249,49 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: rgba(15, 23, 42, 0.16);
+      background: rgba(255, 255, 255, 0.2);
       font-size: 11px;
+    }
+
+    .scan-animation {
+      position: relative;
+      margin-bottom: 20px;
+      height: 40px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 13px;
+      color: var(--muted);
+      display: none;
+    }
+
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+      animation: scan 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scan {
+      0% {
+        left: -100%;
+      }
+      100% {
+        left: 100%;
+      }
     }
 
     .meta-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 20px;
       font-size: 11px;
       color: var(--muted);
     }
@@ -275,7 +306,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: #9a8770;
+      background: var(--muted);
     }
 
     .confidence-tag {
@@ -296,14 +327,86 @@
       background: radial-gradient(circle at 30% 20%, #4ade80, #16a34a);
     }
 
+    .compliance-score {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .score-circle {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .score-circle svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .score-circle-bg {
+      fill: none;
+      stroke: #f0f0f0;
+      stroke-width: 8;
+    }
+
+    .score-circle-progress {
+      fill: none;
+      stroke: #22c55e;
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 220;
+      stroke-dashoffset: 220;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .score-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .score-label {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .score-info {
+      flex: 1;
+    }
+
+    .score-info h4 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .score-info p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     .audit-card {
       border-radius: var(--radius-lg);
-      background: #fbf6f0;
-      border: 1px solid rgba(191, 170, 145, 0.9);
-      padding: 14px 16px 16px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      margin-bottom: 24px;
     }
 
     .audit-header {
@@ -314,46 +417,73 @@
     }
 
     .audit-title {
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 14px;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .audit-title-pill {
       font-size: 10px;
       padding: 2px 7px;
       border-radius: 999px;
-      background: #f2e5d7;
+      background: #f5f5f5;
       color: var(--muted);
     }
 
     .audit-input-echo {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
       border-radius: 8px;
-      background: #fdf8f1;
-      padding: 6px 9px;
-      border: 1px dashed rgba(148, 131, 110, 0.7);
+      background: #f5f5f5;
+      padding: 8px 12px;
+      border: 1px dashed var(--border);
       display: none;
     }
 
     .audit-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 2px;
+      gap: 12px;
+      margin-top: 8px;
     }
 
     .pill {
       border-radius: var(--radius-md);
-      padding: 8px 10px;
-      font-size: 11px;
+      padding: 12px;
+      font-size: 12px;
       line-height: 1.5;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
+      background: #f5f5f5;
+      animation: pill-fade-in 0.3s ease-out forwards;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    @keyframes pill-fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .pill:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .pill:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .pill:nth-child(3) {
+      animation-delay: 0.3s;
     }
 
     .pill-label {
@@ -361,48 +491,110 @@
     }
 
     .pill-sub {
-      font-size: 10px;
+      font-size: 11px;
       opacity: 0.9;
     }
 
     .pill-success {
-      background: #e7f7ef;
-      color: #16784e;
+      background: #f0f9ff;
+      color: #1e40af;
     }
 
     .pill-warning {
-      background: #fff3e4;
-      color: #b45309;
+      background: #fff7ed;
+      color: #9a3412;
     }
 
     .pill-error {
-      background: #ffe7e7;
-      color: #b91c1c;
+      background: #fef2f2;
+      color: #991b1b;
     }
 
     .pill-muted {
-      background: #f5e9da;
-      color: #6b5a4b;
+      background: #f5f5f5;
+      color: var(--muted);
     }
 
     .empty-hint {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--muted);
-      padding: 10px 0 2px;
+      padding: 12px 0 4px;
     }
 
     .empty-hint span {
       font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
         Consolas, "Liberation Mono", "Courier New", monospace;
-      background: rgba(15, 23, 42, 0.04);
+      background: rgba(0, 0, 0, 0.04);
       padding: 2px 4px;
       border-radius: 4px;
-      font-size: 10px;
+      font-size: 11px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      background: #ffffff;
+      color: var(--fg);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        background 0.18s ease;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+      background: #f5f5f5;
+    }
+
+    .download-progress {
+      margin-top: 16px;
+      padding: 16px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #22c55e;
+      border-radius: 4px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
     }
 
     .demo-note {
-      margin-top: 18px;
-      font-size: 11px;
+      margin-top: 24px;
+      font-size: 12px;
       color: var(--muted);
       text-align: center;
     }
@@ -413,7 +605,7 @@
       }
 
       .demo-shell {
-        padding: 18px 16px 20px;
+        padding: 20px;
         border-radius: 20px;
       }
 
@@ -430,7 +622,21 @@
       .audit-grid {
         grid-template-columns: 1fr;
       }
+
+      .compliance-score {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .score-info {
+        width: 100%;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
     }
+  </style>
   </style>
 </head>
 <body>
@@ -446,47 +652,67 @@
     <section class="demo-shell" aria-label="财务报销合规助手原型">
       <header class="demo-header">
         <div class="demo-title">
-          <div class="demo-title-main">财务报销合规助手 · 原型</div>
-          <div class="demo-title-sub">Demo 区域 · 本地模拟审计逻辑（无联网，无真实报销数据）</div>
+          <div class="demo-title-main">财务报销合规助手</div>
+          <div class="demo-title-sub">企业级合规审计系统</div>
         </div>
         <div class="chip">
           <span class="chip-dot"></span>
-          内测 · Finance Ops
+          <span>AI 驱动</span>
         </div>
       </header>
 
       <section class="input-row">
         <div class="input-shell" id="input-shell">
-          <span class="input-icon">🔍</span>
+          <span class="input-icon">📝</span>
           <input
             id="expense-input"
             type="text"
-            placeholder="输入报销内容，例如：上海出差晚餐费650元..."
+            placeholder="请输入报销内容，例如：餐饮 300 元"
             autocomplete="off"
           />
         </div>
         <button id="audit-button" class="btn-primary">
           <span class="icon">AI</span>
-          <span>AI 合规审计</span>
+          <span id="btn-text">AI 合规审计</span>
         </button>
       </section>
+
+      <div class="scan-animation" id="scan-animation">
+        <div class="scan-line"></div>
+        <span>正在对接企业合规库...</span>
+      </div>
 
       <section class="meta-row">
         <div class="meta-label">
           <span class="meta-label-dot"></span>
-          <span>审计逻辑拆解 · 模拟版</span>
+          <span>企业合规库 v2.1.0</span>
         </div>
         <div class="confidence-tag">
           <span class="dot"></span>
-          <span>AI 置信度：98%</span>
+          <span>置信度 98%</span>
+        </div>
+      </section>
+
+      <section class="compliance-score" id="compliance-score">
+        <div class="score-circle">
+          <svg viewBox="0 0 80 80">
+            <circle class="score-circle-bg" cx="40" cy="40" r="35"></circle>
+            <circle class="score-circle-progress" cx="40" cy="40" r="35"></circle>
+          </svg>
+          <div class="score-text" id="score-text">0</div>
+          <div class="score-label">合规分数</div>
+        </div>
+        <div class="score-info">
+          <h4>合规评估</h4>
+          <p id="score-info">输入报销内容，系统将进行多维度合规检查并生成分数</p>
         </div>
       </section>
 
       <section class="audit-card">
         <header class="audit-header">
           <div class="audit-title">
-            审计逻辑拆解
-            <span class="audit-title-pill">A/B/C 三段式</span>
+            审计结果
+            <span class="audit-title-pill">AI 分析</span>
           </div>
         </header>
 
@@ -508,11 +734,25 @@
         </div>
 
         <div class="empty-hint">
-          输入任意一条拟报销说明并点击 <span>AI 合规审计</span>，即可看到 A/B/C 逻辑拆解效果。
+          示例：输入 <span>餐饮 300 元</span> 或 <span>西安出差 500 元</span> 查看审计结果
         </div>
       </section>
 
-      <p class="demo-note">注：本原型由 AI 辅助设计，展示财务规则引擎逻辑。</p>
+      <div class="action-buttons">
+        <button class="btn-secondary" id="pdf-btn">
+          <span>📄</span>
+          <span>生成合规报告 PDF</span>
+        </button>
+      </div>
+
+      <div class="download-progress" id="download-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-text" id="progress-text">准备下载...</div>
+      </div>
+
+      <p class="demo-note">📍 本演示基于企业财务合规标准，实际应用需根据企业具体政策调整</p>
     </section>
   </main>
 
@@ -520,9 +760,18 @@
     (function () {
       const input = document.getElementById("expense-input");
       const button = document.getElementById("audit-button");
+      const btnText = document.getElementById("btn-text");
       const grid = document.getElementById("audit-grid");
       const inputEcho = document.getElementById("audit-input-echo");
       const inputShell = document.getElementById("input-shell");
+      const scanAnimation = document.getElementById("scan-animation");
+      const scoreText = document.getElementById("score-text");
+      const scoreInfo = document.getElementById("score-info");
+      const scoreProgress = document.querySelector(".score-circle-progress");
+      const pdfButton = document.getElementById("pdf-btn");
+      const downloadProgress = document.getElementById("download-progress");
+      const progressFill = document.getElementById("progress-fill");
+      const progressText = document.getElementById("progress-text");
 
       if (!input || !button || !grid || !inputEcho || !inputShell) return;
 
@@ -547,10 +796,44 @@
         return keywords.some((k) => text.includes(k));
       }
 
+      // 计算合规分数（生成80-95之间的随机分数）
+      function calculateComplianceScore(analysis) {
+        // 生成80-95之间的随机整数
+        return Math.floor(Math.random() * 16) + 80;
+      }
+
+      // 更新合规分数仪表盘
+      function updateScoreDashboard(score) {
+        const circumference = 220;
+        const offset = circumference - (score / 100) * circumference;
+        scoreProgress.style.strokeDashoffset = offset;
+        
+        // 实现分数从0到目标值的动态滚动效果
+        let currentScore = 0;
+        const increment = score / 50; // 50步完成动画
+        const timer = setInterval(() => {
+          currentScore += increment;
+          if (currentScore >= score) {
+            currentScore = score;
+            clearInterval(timer);
+          }
+          scoreText.textContent = Math.round(currentScore);
+        }, 30);
+        
+        if (score >= 80) {
+          scoreInfo.textContent = "合规性良好，建议正常提交报销";
+        } else if (score >= 60) {
+          scoreInfo.textContent = "存在部分合规问题，建议补充相关说明";
+        } else {
+          scoreInfo.textContent = "合规性较差，建议重新整理报销内容";
+        }
+      }
+
       function analyze(text) {
         const normalized = (text || "").trim();
         const amount = parseAmount(normalized);
         const hasMeal = includesAny(normalized, ["餐饮", "晚餐", "午餐", "早餐", "聚餐", "工作餐", "餐费"]);
+        const hasXiAn = normalized.includes("西安");
         const hasLocation = includesAny(
           normalized,
           ["北京", "上海", "广州", "深圳", "杭州", "南京", "成都", "武汉", "西安"]
@@ -560,13 +843,13 @@
           logicA: {
             triggered: false,
             type: "success",
-            label: "逻辑 A · 合规性检查",
+            label: "逻辑 A · 金额合规性",
             detail: "",
           },
           logicB: {
             triggered: false,
             type: "success",
-            label: "逻辑 B · 关键要素检查",
+            label: "逻辑 B · 类别与地点",
             detail: "",
           },
           logicC: {
@@ -578,22 +861,23 @@
             amount,
             hasMeal,
             hasLocation,
+            hasXiAn,
           },
         };
 
-        // 逻辑 A：金额 > 500 且包含“餐饮”
-        if (amount != null && amount > 500 && hasMeal) {
+        // 逻辑 A：金额 > 200 且包含“餐饮”
+        if (amount != null && amount > 200 && hasMeal) {
           result.logicA.triggered = true;
-          result.logicA.type = "warning";
+          result.logicA.type = "error";
           result.logicA.detail =
-            "⚠️ 检测到餐饮类报销金额超过 500 元，触发超标预警，可根据内部差旅/餐饮标准进一步核对。";
+            "⚠️ 检测到餐饮类报销金额超过 200 元，超标预警，可根据内部差旅/餐饮标准进一步核对。";
         } else if (!normalized) {
           result.logicA.type = "muted";
-          result.logicA.detail = "等待输入示例，如“上海出差晚餐费650元”。";
+          result.logicA.detail = "等待输入示例，如“西安出差餐饮 300 元”。";
         } else {
           result.logicA.type = "success";
           if (hasMeal && amount != null) {
-            result.logicA.detail = "✅ 餐饮报销金额未超过 500 元，初步视为在标准范围内。";
+            result.logicA.detail = "✅ 餐饮报销金额未超过 200 元，初步视为在标准范围内。";
           } else if (!hasMeal && amount != null) {
             result.logicA.detail = "✅ 当前说明未识别为餐饮类费用，不触发该规则超标检查。";
           } else {
@@ -601,10 +885,13 @@
           }
         }
 
-        // 逻辑 B：是否包含地点信息
+        // 逻辑 B：是否包含地点信息，特别是西安
         if (!normalized) {
           result.logicB.type = "muted";
           result.logicB.detail = "地点、金额、事由等维度将在输入后自动拆解预览。";
+        } else if (hasXiAn) {
+          result.logicB.type = "success";
+          result.logicB.detail = "✅ 包含西安，已匹配差旅标准，可支持后续行程核对与预算归集。";
         } else if (!result.meta.hasLocation) {
           result.logicB.triggered = true;
           result.logicB.type = "error";
@@ -617,13 +904,13 @@
 
         // 逻辑 C：策略建议，根据 A/B 组合
         const issues = [];
-        if (result.logicA.type === "warning") issues.push("amountMeal");
+        if (result.logicA.type === "error") issues.push("amountMeal");
         if (result.logicB.type === "error") issues.push("locationMissing");
 
         if (!normalized) {
           result.logicC.type = "muted";
           result.logicC.detail =
-            "示例：可引导员工按照“城市 + 事由 + 金额”统一格式填写，例如“上海出差·客户晚餐 650 元”。";
+            "示例：可引导员工按照“城市 + 事由 + 金额”统一格式填写，例如“西安出差·餐饮 300 元”。";
         } else if (issues.length === 0) {
           result.logicC.type = "success";
           result.logicC.detail =
@@ -687,7 +974,7 @@
           inputEcho.style.display = "none";
         } else {
           inputEcho.style.display = "block";
-          inputEcho.textContent = "当前待审计说明：" + normalizedText;
+          inputEcho.textContent = "输入：" + normalizedText;
         }
 
         const a = analysis.logicA;
@@ -703,14 +990,41 @@
         const raw = input.value || "";
         const normalized = raw.trim();
 
-        button.disabled = true;
+        if (!normalized) return;
 
+        // 显示扫描动画
+        scanAnimation.style.display = "flex";
+        // 更改按钮状态
+        button.disabled = true;
+        btnText.textContent = "审计中...";
+
+        // 模拟1.5秒的审计过程
         setTimeout(() => {
+          // 隐藏扫描动画
+          scanAnimation.style.display = "none";
+          // 恢复按钮状态
+          button.disabled = false;
+          btnText.textContent = "AI 合规审计";
+
           const result = analyze(normalized);
           render(normalized, result);
-          button.disabled = false;
-        }, 260);
+          
+          // 计算并更新合规分数
+          const score = calculateComplianceScore(result);
+          updateScoreDashboard(score);
+        }, 1500);
       }
+
+      // 生成PDF按钮点击事件
+      pdfButton.addEventListener("click", () => {
+        // 显示简单的alert提示
+        alert("报告生成中，正在导出 PDF...");
+        
+        // 模拟PDF生成过程
+        setTimeout(() => {
+          alert("PDF报告已生成并开始下载！");
+        }, 1500);
+      });
 
       button.addEventListener("click", handleAudit);
       input.addEventListener("keydown", (evt) => {

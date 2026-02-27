@@ -6,25 +6,13 @@
   <title>财务知识问答 Copilot · 流程原型</title>
   <style>
     :root {
-      /* Sunrise palette，与简历主页保持统一的暖色系 */
-      --bg: #fff7ed;
-      --bg-soft: #fffbeb;
-      --bg-elevated: #fffbeb;
-      --bg-chat: #fff7ed;
-      --bg-sidebar: #fff7ed;
-      --bg-bubble-user: #fed7aa;
-      --bg-bubble-ai: #ffedd5;
-      --border-subtle: #fed7aa;
-      --border-strong: #f97316;
-      --accent: #ea580c;
-      --accent-soft: #ffedd5;
-      --accent-strong: #f97316;
-      --fg: #1f1308;
-      --fg-muted: #a16207;
-      --fg-soft: #b45309;
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --shadow-soft: 0 22px 60px rgba(15, 23, 42, 0.85);
+      /* 极简黑白灰配色方案 */
+      --bg: #f5f5f7;
+      --bg-white: #ffffff;
+      --border: #e0e0e0;
+      --text-primary: #1d1d1f;
+      --text-secondary: #86868b;
+      --accent: #0066cc;
       --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
@@ -37,8 +25,8 @@
     body {
       margin: 0;
       padding: 0;
-      background: radial-gradient(circle at top, #fee2b7 0, #fffbeb 40%, #fff7ed 100%);
-      color: var(--fg);
+      background: var(--bg);
+      color: var(--text-primary);
       font-family: var(--font-sans);
       letter-spacing: 0.02em;
       -webkit-font-smoothing: antialiased;
@@ -68,23 +56,21 @@
     main {
       width: 100%;
       max-width: 1120px;
-      border-radius: 26px;
-      background: radial-gradient(circle at top left, #fffbeb 0, #fff7ed 45%, #fed7aa 100%);
-      border: 1px solid rgba(248, 191, 120, 0.9);
-      box-shadow: var(--shadow-soft);
+      border-radius: 8px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      backdrop-filter: blur(12px);
     }
 
     .top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 18px 10px;
-      border-bottom: 1px solid rgba(248, 191, 120, 0.9);
-      background: radial-gradient(circle at top left, #ffedd5, #fed7aa);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-white);
     }
 
     .back-link {
@@ -95,17 +81,15 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       text-decoration: none;
-      color: var(--muted);
+      color: var(--accent);
       padding: 6px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(248, 191, 120, 0.9);
-      background: rgba(255, 249, 235, 0.96);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--bg-white);
       transition:
         background 0.18s ease,
         color 0.18s ease,
-        border-color 0.18s ease,
-        transform 0.14s ease,
-        box-shadow 0.22s ease;
+        border-color 0.18s ease;
     }
 
     .back-link span.icon {
@@ -113,11 +97,8 @@
     }
 
     .back-link:hover {
-      background: #fed7aa;
-      color: var(--fg);
-      border-color: rgba(248, 191, 120, 1);
-      box-shadow: 0 0 0 1px rgba(248, 191, 120, 0.8), 0 12px 30px rgba(248, 191, 120, 0.6);
-      transform: translateY(-1px);
+      background: var(--bg);
+      border-color: var(--accent);
     }
 
     .top-title {
@@ -131,40 +112,40 @@
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      color: var(--fg-muted);
+      color: var(--text-secondary);
     }
 
     .top-title-sub {
       font-size: 11px;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     .layout {
       display: grid;
-      grid-template-columns: 260px minmax(0, 1.7fr) 260px;
+      grid-template-columns: 280px minmax(0, 1.7fr) 280px;
       min-height: 520px;
-      background: radial-gradient(circle at top left, #fffbeb, #fff7ed 55%, #fed7aa 100%);
+      background: var(--bg-white);
     }
 
     .sidebar {
-      border-right: 1px solid var(--border-subtle);
-      background: radial-gradient(circle at top left, #fffbeb, #fff7ed 70%, #fed7aa 100%);
-      padding: 16px 14px 16px;
+      border-right: 1px solid var(--border);
+      background: var(--bg-white);
+      padding: 20px 16px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
     }
 
     .sidebar-title {
       font-size: 12px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     .sidebar-note {
       font-size: 11px;
-      color: var(--fg-muted);
+      color: var(--text-secondary);
     }
 
     .history-list {
@@ -177,16 +158,22 @@
     }
 
     .history-item {
-      border-radius: 999px;
-      padding: 7px 10px;
-      border: 1px solid rgba(248, 191, 120, 0.85);
-      background: radial-gradient(circle at top left, #fffbeb, #fed7aa);
+      border-radius: 4px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-white);
       font-size: 11px;
-      color: var(--muted);
+      color: var(--text-primary);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+      cursor: pointer;
+      transition: border-color 0.18s ease;
+    }
+
+    .history-item:hover {
+      border-color: var(--accent);
     }
 
     .history-item-label {
@@ -199,26 +186,27 @@
       font-size: 10px;
       padding: 2px 6px;
       border-radius: 999px;
-      background: rgba(254, 215, 170, 0.9);
-      color: #9a3412;
+      background: var(--bg);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
     }
 
     .history-hint {
       margin-top: 6px;
       font-size: 10px;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     .chat-area {
       display: flex;
       flex-direction: column;
-      border-right: 1px solid var(--border-subtle);
-      background: radial-gradient(circle at top center, #fffbeb, #fff7ed 55%, #fed7aa 100%);
+      border-right: 1px solid var(--border);
+      background: var(--bg-white);
     }
 
     .chat-header {
-      padding: 14px 18px 10px;
-      border-bottom: 1px solid rgba(248, 191, 120, 0.9);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -236,20 +224,21 @@
       font-weight: 550;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: var(--text-primary);
     }
 
     .chat-header-sub {
       font-size: 11px;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     .status-pill {
       font-size: 11px;
       padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(248, 191, 120, 0.9);
-      background: rgba(255, 249, 235, 0.95);
-      color: #b45309;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--bg-white);
+      color: var(--text-secondary);
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -259,13 +248,13 @@
       width: 7px;
       height: 7px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #f97316, #ea580c);
-      box-shadow: 0 0 0 3px rgba(248, 191, 120, 0.5);
+      background: var(--accent);
+      border: 1px solid var(--border);
     }
 
     .chat-body {
       flex: 1;
-      padding: 16px 18px 80px;
+      padding: 20px 24px 90px;
       overflow-y: auto;
       position: relative;
     }
@@ -275,7 +264,7 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
       font-size: 13px;
     }
 
@@ -292,40 +281,40 @@
       width: 24px;
       height: 24px;
       border-radius: 999px;
-      background: radial-gradient(circle at top, #38bdf8, #1d4ed8);
+      background: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 11px;
-      color: #eff6ff;
+      color: white;
       flex-shrink: 0;
-      box-shadow: 0 0 0 2px rgba(15, 23, 42, 1);
+      border: 1px solid var(--border);
     }
 
     .msg-avatar.user {
-      background: radial-gradient(circle at top, #4ade80, #15803d);
+      background: var(--bg);
+      color: var(--text-primary);
     }
 
     .msg-bubble {
       max-width: 76%;
-      border-radius: 14px;
-      padding: 9px 11px 9px;
+      border-radius: 4px;
+      padding: 12px 16px;
       line-height: 1.6;
-      border: 1px solid var(--border-strong);
-      background: var(--bg-bubble-ai);
-      color: var(--fg);
+      border: 1px solid var(--border);
+      background: var(--bg-white);
+      color: var(--text-primary);
       position: relative;
     }
 
     .msg-row.user .msg-bubble {
-      background: var(--bg-bubble-user);
-      border-color: rgba(37, 99, 235, 0.7);
+      background: var(--bg);
     }
 
     .msg-meta {
-      margin-top: 4px;
+      margin-top: 6px;
       font-size: 10px;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     .typing-indicator {
@@ -333,15 +322,15 @@
       align-items: center;
       gap: 3px;
       font-size: 11px;
-      color: var(--fg-soft);
-      margin-top: 4px;
+      color: var(--text-secondary);
+      margin-top: 6px;
     }
 
     .typing-dot {
       width: 4px;
       height: 4px;
       border-radius: 999px;
-      background: rgba(148, 163, 184, 0.9);
+      background: var(--text-secondary);
       animation: typing-bounce 1s infinite ease-in-out;
     }
 
@@ -368,9 +357,9 @@
       position: absolute;
       inset-inline: 0;
       bottom: 0;
-      padding: 10px 18px 12px;
-      background: linear-gradient(to top, rgba(255, 247, 237, 0.98), rgba(255, 247, 237, 0.82), transparent);
-      border-top: 1px solid rgba(248, 191, 120, 0.95);
+      padding: 12px 24px 16px;
+      background: linear-gradient(to top, var(--bg-white), rgba(255, 255, 255, 0.8), transparent);
+      border-top: 1px solid var(--border);
     }
 
     .chat-input-inner {
@@ -379,19 +368,19 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      background: #fffbeb;
-      border-radius: 999px;
-      border: 1px solid rgba(248, 191, 120, 0.95);
-      padding: 8px 10px 8px 14px;
+      background: var(--bg-white);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      padding: 10px 12px 10px 16px;
     }
 
     .chat-input-prefix {
       font-size: 11px;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
       padding: 2px 8px;
-      border-radius: 999px;
-      background: rgba(255, 247, 237, 0.96);
-      border: 1px solid rgba(248, 191, 120, 0.9);
+      border-radius: 4px;
+      background: var(--bg);
+      border: 1px solid var(--border);
       white-space: nowrap;
     }
 
@@ -400,88 +389,91 @@
       border: none;
       outline: none;
       background: transparent;
-      color: var(--fg);
+      color: var(--text-primary);
       font-size: 13px;
     }
 
     .chat-input::placeholder {
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     .chat-send-btn {
       border: none;
       outline: none;
       cursor: pointer;
-      border-radius: 999px;
-      padding: 6px 10px;
+      border-radius: 4px;
+      padding: 8px 12px;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      background: radial-gradient(circle at top, #fdba74, #f97316);
-      color: #3b1302;
+      background: var(--accent);
+      color: white;
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      box-shadow: 0 10px 24px rgba(234, 88, 12, 0.35);
+      border: 1px solid var(--accent);
       transition:
-        transform 0.14s ease,
-        box-shadow 0.18s ease,
-        filter 0.14s ease;
+        background 0.18s ease,
+        color 0.18s ease;
     }
 
     .chat-send-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 28px rgba(234, 88, 12, 0.45);
-      filter: brightness(1.05);
+      background: white;
+      color: var(--accent);
     }
 
     .chat-send-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 9px 18px rgba(234, 88, 12, 0.35);
-      filter: brightness(0.97);
+      background: var(--accent);
+      color: white;
     }
 
     .flow-panel {
-      padding: 16px 14px 16px;
-      background: radial-gradient(circle at top right, #fffbeb, #fff7ed 65%, #fed7aa 100%);
+      padding: 20px 16px;
+      background: var(--bg-white);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .flow-title {
       font-size: 12px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     .flow-subtitle {
       font-size: 11px;
-      color: var(--fg-muted);
+      color: var(--text-secondary);
     }
 
     .flow-nodes {
-      margin-top: 6px;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       font-size: 11px;
-      color: var(--fg-muted);
+      color: var(--text-secondary);
     }
 
     .flow-node-row {
       display: flex;
       align-items: center;
       gap: 8px;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    .flow-node-row.active {
+      opacity: 1;
     }
 
     .flow-node {
       flex: 1;
-      border-radius: 999px;
-      padding: 6px 10px;
-      border: 1px solid rgba(248, 191, 120, 0.9);
-      background: rgba(255, 249, 235, 0.96);
+      border-radius: 4px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-white);
       display: flex;
       flex-direction: column;
       gap: 2px;
@@ -489,24 +481,24 @@
 
     .flow-node-label {
       font-size: 11px;
-      color: var(--fg);
+      color: var(--text-primary);
     }
 
     .flow-node-sub {
       font-size: 10px;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     .flow-arrow {
       flex-shrink: 0;
       font-size: 13px;
-      color: var(--accent-strong);
+      color: var(--text-secondary);
     }
 
     .flow-footnote {
       margin-top: 8px;
       font-size: 10px;
-      color: var(--fg-soft);
+      color: var(--text-secondary);
     }
 
     @media (max-width: 960px) {
@@ -521,17 +513,17 @@
 
       .sidebar {
         border-right: none;
-        border-bottom: 1px solid var(--border-subtle);
-        padding-block: 12px;
+        border-bottom: 1px solid var(--border);
+        padding-block: 16px;
       }
 
       .chat-area {
         border-right: none;
-        border-bottom: 1px solid var(--border-subtle);
+        border-bottom: 1px solid var(--border);
       }
 
       .flow-panel {
-        padding-top: 12px;
+        padding-top: 16px;
       }
     }
   </style>
@@ -677,29 +669,207 @@
 
   <script>
     (function () {
-      var fullText =
-        "根据公司《2026版差旅管理制度》，北京属于一类城市，您的职级标准为 800 元/天。" +
-        " 建议优先选择携程商旅等统一预订渠道，以实现免垫付并保证发票抬头合规。";
+      // 元素获取
+      const chatMessages = document.getElementById('chat-messages');
+      const chatInput = document.querySelector('.chat-input');
+      const sendButton = document.querySelector('.chat-send-btn');
+      const historyItems = document.querySelectorAll('.history-item');
+      const flowNodeRows = document.querySelectorAll('.flow-node-row');
 
-      var textEl = document.getElementById("ai-message-text");
-      var typingEl = document.getElementById("typing-indicator");
-      var index = 0;
-      var typingDelay = 26;
-
-      if (!textEl || !typingEl) return;
-
-      function typeNext() {
-        if (index >= fullText.length) {
-          typingEl.style.display = "none";
-          return;
+      // 历史记录数据
+      const historyData = [
+        {
+          question: '北京出差的住宿报销标准是多少？',
+          answer: '根据公司《2026版差旅管理制度》，北京属于一类城市，您的职级标准为 800 元/天。建议优先选择携程商旅等统一预订渠道，以实现免垫付并保证发票抬头合规。'
+        },
+        {
+          question: '发票开具规范是什么？专票和普票有什么区别？',
+          answer: '发票开具规范：1. 抬头必须为公司全称和税号；2. 项目名称需与实际业务一致；3. 金额大小写必须一致。专票可用于增值税进项抵扣，普票不可抵扣。'
+        },
+        {
+          question: '报销进度查询，单号 2026-04-018',
+          answer: '您的报销单 2026-04-018 目前处于财务审核阶段，预计 3 个工作日内完成处理。如有疑问，可联系财务共享中心。'
+        },
+        {
+          question: '业务招待费的合理区间是多少？',
+          answer: '业务招待费标准：根据《2026版财务管理制度》，单次招待费用应控制在人均 300 元以内，超过标准需提前审批。'
         }
-        textEl.textContent += fullText.charAt(index);
-        index += 1;
-        var delay = typingDelay + Math.random() * 40;
-        window.setTimeout(typeNext, delay);
+      ];
+
+      // 初始化AI消息
+      function initAIMessage() {
+        const aiMessageRow = document.getElementById('ai-message-row');
+        const aiMessageText = document.getElementById('ai-message-text');
+        const typingIndicator = document.getElementById('typing-indicator');
+        
+        const fullText = "根据公司《2026版差旅管理制度》，北京属于一类城市，您的职级标准为 800 元/天。建议优先选择携程商旅等统一预订渠道，以实现免垫付并保证发票抬头合规。";
+        let index = 0;
+        const typingDelay = 26;
+
+        function typeNext() {
+          if (index >= fullText.length) {
+            typingIndicator.style.display = "none";
+            return;
+          }
+          aiMessageText.textContent += fullText.charAt(index);
+          index += 1;
+          const delay = typingDelay + Math.random() * 40;
+          window.setTimeout(typeNext, delay);
+        }
+
+        window.setTimeout(typeNext, 500);
       }
 
-      window.setTimeout(typeNext, 500);
+      // 发送消息
+      function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        // 添加用户消息
+        addUserMessage(message);
+        chatInput.value = '';
+
+        // 模拟AI思考
+        addAITypingMessage();
+
+        // 模拟AI处理过程（逻辑图动画）
+        animateFlowNodes();
+
+        // 1秒后显示AI回复
+        setTimeout(() => {
+          const aiResponse = generateAIResponse(message);
+          updateAIMessage(aiResponse);
+        }, 1000);
+      }
+
+      // 添加用户消息
+      function addUserMessage(text) {
+        const msgRow = document.createElement('div');
+        msgRow.className = 'msg-row user';
+        msgRow.innerHTML = `
+          <div class="msg-bubble">
+            ${text}
+            <div class="msg-meta">用户 · 来自桌面端 Copilot 入口</div>
+          </div>
+          <div class="msg-avatar user">ME</div>
+        `;
+        chatMessages.appendChild(msgRow);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // 添加AI输入状态消息
+      function addAITypingMessage() {
+        const msgRow = document.createElement('div');
+        msgRow.className = 'msg-row';
+        msgRow.innerHTML = `
+          <div class="msg-avatar">AI</div>
+          <div class="msg-bubble">
+            <span>AI 正在检索制度库...</span>
+            <div class="typing-indicator">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+            </div>
+            <div class="msg-meta">Copilot · 处理中</div>
+          </div>
+        `;
+        chatMessages.appendChild(msgRow);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // 更新AI消息
+      function updateAIMessage(text) {
+        // 移除最后一个输入状态消息
+        const lastMessage = chatMessages.lastElementChild;
+        if (lastMessage && lastMessage.querySelector('.typing-indicator')) {
+          lastMessage.remove();
+        }
+
+        // 添加AI回复
+        const msgRow = document.createElement('div');
+        msgRow.className = 'msg-row';
+        msgRow.innerHTML = `
+          <div class="msg-avatar">AI</div>
+          <div class="msg-bubble">
+            ${text}
+            <div class="msg-meta">Copilot · 已按制度匹配完成</div>
+          </div>
+        `;
+        chatMessages.appendChild(msgRow);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // 生成AI回复
+      function generateAIResponse(message) {
+        if (message.includes('出差')) {
+          return '根据公司《2026版差旅管理制度》，一类城市（如北京、上海、广州）住宿标准为 800 元/天，二类城市为 600 元/天。差旅补贴为 100 元/天，无需发票。';
+        } else if (message.includes('发票')) {
+          return '发票合规要求：1. 抬头必须为公司全称和税号；2. 项目名称需与实际业务一致；3. 金额大小写必须一致；4. 必须加盖发票专用章。建议优先选择增值税专用发票，可用于进项抵扣。';
+        } else {
+          return '已收到您的咨询，根据财务制度，请确保您的单据完整性，包括：1. 合法有效的发票；2. 完整的审批流程；3. 相关业务证明材料。如有具体问题，请详细描述以便我提供更准确的解答。';
+        }
+      }
+
+      // 逻辑图动画
+      function animateFlowNodes() {
+        flowNodeRows.forEach((node, index) => {
+          setTimeout(() => {
+            node.classList.add('active');
+          }, index * 250);
+        });
+
+        // 重置动画
+        setTimeout(() => {
+          flowNodeRows.forEach(node => {
+            node.classList.remove('active');
+          });
+        }, 2000);
+      }
+
+      // 历史记录点击事件
+      function setupHistoryEvents() {
+        historyItems.forEach((item, index) => {
+          item.addEventListener('click', () => {
+            // 清空聊天记录
+            chatMessages.innerHTML = '';
+            
+            // 添加历史问题和回答
+            addUserMessage(historyData[index].question);
+            addAITypingMessage();
+            
+            // 模拟AI处理
+            animateFlowNodes();
+            
+            // 显示回答
+            setTimeout(() => {
+              updateAIMessage(historyData[index].answer);
+            }, 1000);
+          });
+        });
+      }
+
+      // 事件监听
+      function setupEventListeners() {
+        // 发送按钮点击
+        sendButton.addEventListener('click', sendMessage);
+        
+        // 回车键发送
+        chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            sendMessage();
+          }
+        });
+      }
+
+      // 初始化
+      function init() {
+        initAIMessage();
+        setupEventListeners();
+        setupHistoryEvents();
+      }
+
+      // 启动
+      init();
     })();
   </script>
 </body>

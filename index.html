@@ -460,7 +460,66 @@
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
-      padding: 24px;git remote add origin [你刚才复制的仓库链接]
+      padding: 24px;
+    }
+
+    .message-card {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .message-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .message-nickname {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .message-time {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .message-content {
+      color: var(--fg);
+      line-height: 1.6;
+      word-wrap: break-word;
+      word-break: break-all;
+      margin-bottom: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .message-delete-btn {
+      background: transparent;
+      border: 1px solid #ff4d4f;
+      color: #ff4d4f;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .message-delete-btn:hover {
+      background: #ff4d4f;
+      color: white;
     }
 
     .message-form {
@@ -897,25 +956,17 @@
               if (error) throw error;
 
               messagesContainer.innerHTML = data.length === 0 ? '<div style="text-align:center;color:#888;padding:20px;">暂无留言</div>' : 
-
                   data.map(m => `
-
-                  <div class="message-item" style="border-bottom:1px solid rgba(255,255,255,0.1);padding:15px 0;position:relative;">
-
-                      <button onclick="deleteMessage(${m.id})" style="position:absolute;right:0;top:15px;background:none;border:none;color:#ff4d4f;cursor:pointer;font-size:12px;">删除</button>
-
-                      <div style="display:flex;justify-content:space-between;font-size:0.9em;color:#aaa;margin-bottom:8px;padding-right:40px;">
-
-                          <strong>${m.nickname}</strong>
-
-                          <span>${new Date(m.created_at).toLocaleString()}</span>
-
+                  <div class="message-card">
+                      <div class="message-header">
+                          <div class="message-header-left">
+                              <div class="message-nickname">${m.nickname}</div>
+                              <div class="message-time">${new Date(m.created_at).toLocaleString()}</div>
+                          </div>
+                          <button onclick="deleteMessage(${m.id})" class="message-delete-btn">删除</button>
                       </div>
-
-                      <div style="color:#eee;line-height:1.6;">${m.content}</div>
-
+                      <div class="message-content">${m.content}</div>
                   </div>
-
               `).join('');
 
           } catch (err) { console.error(err); }
