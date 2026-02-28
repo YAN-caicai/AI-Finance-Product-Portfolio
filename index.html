@@ -799,7 +799,7 @@
       <div class="projects-grid">
         <article class="project-card card-elevated">
           <div class="project-title-row">
-            <h2 class="project-title">财务报销合规助手 · 原型</h2>
+            <h2 class="project-title">财务报销合规助手</h2>
             <div class="project-tag">Internal Tool · MVP</div>
           </div>
           <div class="project-meta">
@@ -823,7 +823,7 @@
 
         <article class="project-card card-elevated">
           <div class="project-title-row">
-            <h2 class="project-title">财务知识问答 Copilot · 流程设计</h2>
+            <h2 class="project-title">财务知识问答 Copilot</h2>
             <div class="project-tag">Knowledge · RAG</div>
           </div>
           <div class="project-meta">
@@ -847,30 +847,300 @@
       </div>
     </section>
 
-    <!-- Projects & Skills -->
-    <section aria-labelledby="skills-title">
+    <!-- Product Documentation -->
+    <section aria-labelledby="docs-title">
       <div class="section-header">
-        <div class="section-title" id="skills-title">Projects &amp; Skills</div>
-        <div class="section-subtitle">工具栈 · 能力标签</div>
+        <div class="section-title" id="docs-title">Product Documentation</div>
+        <div class="section-subtitle">产品说明 · 功能解析</div>
       </div>
-      <article class="card-compact card-elevated">
-        <div class="card-label">能力映射</div>
-        <h2 class="card-title">从财务专业到 AI PM 的可迁移资产</h2>
-        <div class="skills-row">
-          <span class="skill-pill">Cursor · Vibe Coding 思维</span>
-          <span class="skill-pill">Prompt Engineering（中文/英文）</span>
-          <span class="skill-pill">RAG 流程设计与评估</span>
-          <span class="skill-pill">财务报销 / 审计逻辑设计</span>
-          <span class="skill-pill">多轮对话流程编排</span>
-          <span class="skill-pill">与财务/业务团队的需求访谈</span>
+      
+      <!-- Accordion Styles -->
+      <style>
+        .accordion {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        
+        .accordion-item {
+          border-radius: var(--radius-md);
+          border: 1px solid var(--border-subtle);
+          background: #f7ecdd;
+          overflow: hidden;
+        }
+        
+        .accordion-header {
+          padding: 18px 20px;
+          background: radial-gradient(circle at 10% 0, #f7ecdd, #f0e5d8);
+          cursor: pointer;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          transition: background 0.2s ease;
+        }
+        
+        .accordion-header:hover {
+          background: radial-gradient(circle at 10% 0, #f0e5d8, #e8d9c8);
+        }
+        
+        .accordion-header:hover .accordion-click-text {
+          color: #333;
+        }
+        
+        .accordion-title {
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--fg);
+        }
+        
+        .accordion-right {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        
+        .accordion-click-text {
+          font-size: 12px;
+          color: #86868b;
+          transition: color 0.2s ease;
+        }
+        
+        .accordion-icon {
+          font-size: 14px;
+          transition: transform 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-icon {
+          transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+          padding: 0 20px;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .accordion-item.active .accordion-content {
+          padding: 20px;
+          max-height: 2000px;
+        }
+        
+        .doc-section {
+          margin-bottom: 24px;
+        }
+        
+        .doc-section:last-child {
+          margin-bottom: 0;
+        }
+        
+        .doc-section-title {
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 12px;
+          color: var(--accent);
+        }
+        
+        .doc-section-body {
+          font-size: 13px;
+          line-height: 1.7;
+          color: var(--muted);
+        }
+        
+        .doc-section-body p {
+          margin-bottom: 12px;
+        }
+        
+        .doc-section-body p:last-child {
+          margin-bottom: 0;
+        }
+        
+        .code-block {
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 6px;
+          padding: 12px 16px;
+          margin: 12px 0;
+          font-size: 12px;
+          line-height: 1.5;
+          border: 1px solid var(--border-subtle);
+        }
+        
+        .workflow {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin: 16px 0;
+          padding: 16px;
+          background: rgba(255, 255, 255, 0.6);
+          border-radius: 8px;
+          border: 1px solid var(--border-subtle);
+        }
+        
+        .workflow-step {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 13px;
+        }
+        
+        .workflow-step::before {
+          content: "→";
+          color: var(--accent);
+          font-weight: 600;
+        }
+        
+        .demo-button {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 16px;
+          padding: 10px 20px;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 500;
+          border: none;
+          cursor: pointer;
+          background: radial-gradient(circle at 10% 0, var(--accent), #c2410c);
+          color: #ffffff;
+          box-shadow: 0 8px 20px rgba(234, 88, 12, 0.3);
+          transition: transform 0.14s ease, box-shadow 0.18s ease, filter 0.14s ease;
+          text-decoration: none;
+        }
+        
+        .demo-button:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 12px 24px rgba(234, 88, 12, 0.4);
+          filter: brightness(1.05);
+        }
+      </style>
+      
+      <div class="accordion">
+        <!-- 财务报销合规助手 v2.1.0 -->
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title" id="doc-reimbursement">财务报销合规助手</div>
+            <div class="accordion-right">
+              <div class="accordion-click-text">点击查看</div>
+              <div class="accordion-icon">▼</div>
+            </div>
+          </div>
+          <div class="accordion-content">
+            <div class="doc-section">
+              <div class="doc-section-title">业务背景</div>
+              <div class="doc-section-body">
+                <p>传统报销依赖人工审核，存在效率低、规则更新延迟、重复报销风险等痛点。企业需要一个智能系统来自动化报销审核流程，提高审核效率并降低合规风险。</p>
+              </div>
+            </div>
+            
+            <div class="doc-section">
+              <div class="doc-section-title">核心规则引擎</div>
+              <div class="doc-section-body">
+                <p><strong>金额校验：</strong>基于部门预算的阶梯式额度管控（如餐饮单次限额 200 元）。</p>
+                <p><strong>关键词匹配：</strong>自动识别敏感词（如“礼品”、“娱乐”）并触发二次风控。</p>
+                <p><strong>城市标准：</strong>自动匹配西安、上海等不同城市的差旅补助系数。</p>
+              </div>
+            </div>
+            
+            <div class="doc-section">
+              <div class="doc-section-title">AI 赋能点</div>
+              <div class="doc-section-body">
+                <p>通过 LLM 解析非结构化描述（如“西安出差晚间餐饮”），自动拆解时间、地点、事由，并与合规库进行语义比对。</p>
+              </div>
+            </div>
+            
+            <div class="doc-section">
+              <div class="doc-section-title">交互流程 (Workflow)</div>
+              <div class="workflow">
+                <div class="workflow-step">用户输入文本/图片</div>
+                <div class="workflow-step">AI 语义拆解</div>
+                <div class="workflow-step">规则库合规性校验</div>
+                <div class="workflow-step">动态合规分计算</div>
+                <div class="workflow-step">生成审计建议</div>
+              </div>
+            </div>
+            
+            <a href="demo.html" target="_blank" class="demo-button">
+              <span>运行 Demo 演示</span>
+              <span>→</span>
+            </a>
+          </div>
         </div>
-        <p class="skills-note">
-          希望未来与你一起，搭建更多“有边界感、可验证、能上线”的 AI 产品。
-          如果你正在做财务数字化、AI 办公助手或内部知识库类产品，欢迎把我当作
-          <strong>深入理解财务逻辑的 AI PM 候选人</strong> 来看待。
-        </p>
-      </article>
+        
+        <!-- 财务合规 Copilot · 智能咨询助手 -->
+        <div class="accordion-item">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <div class="accordion-title" id="doc-copilot">财务合规 Copilot · 智能咨询助手</div>
+            <div class="accordion-right">
+              <div class="accordion-click-text">点击查看</div>
+              <div class="accordion-icon">▼</div>
+            </div>
+          </div>
+          <div class="accordion-content">
+            <div class="doc-section">
+              <div class="doc-section-title">业务背景 (Context)</div>
+              <div class="doc-section-body">
+                <p>企业财务制度（如差旅、报销、采购规范）通常篇幅冗长、更新频繁。员工在填报前难以快速精准获知实时政策，导致财务部需重复回答大量基础咨询，审核通过率低且沟通成本极高。</p>
+              </div>
+            </div>
+            
+            <div class="doc-section">
+              <div class="doc-section-title">产品逻辑 (PRD Logic)</div>
+              <div class="doc-section-body">
+                <p><strong>核心功能：</strong>基于自然语言处理（NLP）的财务知识即时咨询系统，实现“从制度到对话”的直接转化。</p>
+                <p><strong>合规溯源性：</strong>系统回复严格挂钩企业内部文件，每一条建议均附带 <code>《2026版差旅管理制度》</code> 等制度版本号，确保回复的权威性与可追溯性。</p>
+                <p><strong>多维度判定：</strong>自动关联用户职级（如：员工/经理）、城市等级（如：一类/二类城市）等多重维度，给出个性化的报销标准建议。</p>
+              </div>
+            </div>
+            
+            <div class="doc-section">
+              <div class="doc-section-title">AI 赋能点 (AI Value)</div>
+              <div class="doc-section-body">
+                <p><strong>意图识别：</strong>准确识别模糊提问（如“西安出差住哪？”）背后的合规需求。</p>
+                <p><strong>RAG 架构模拟：</strong>模拟检索增强生成技术，避免 AI 幻觉，确保输出内容完全基于企业自有知识库，而非互联网公开数据。</p>
+              </div>
+            </div>
+            
+            <div class="doc-section">
+              <div class="doc-section-title">交互流程 (Workflow)</div>
+              <div class="workflow">
+                <div class="workflow-step">用户输入</div>
+                <div class="workflow-step">语义识别：解析城市/费用类型/职级</div>
+                <div class="workflow-step">调取制度库：匹配2026版制度</div>
+                <div class="workflow-step">输出合规结论</div>
+              </div>
+            </div>
+            
+            <a href="copilot.html" target="_blank" class="demo-button">
+              <span>运行 Demo 演示</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
+    
+    <script>
+      function toggleAccordion(header) {
+        const item = header.parentElement;
+        const isActive = item.classList.contains('active');
+        
+        // Close all accordion items
+        document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('active'));
+        
+        // Open the clicked item if it wasn't active
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      }
+      
+      // Initialize the first accordion item as open
+      document.addEventListener('DOMContentLoaded', function() {
+        const firstItem = document.querySelector('.accordion-item');
+        if (firstItem) {
+          firstItem.classList.add('active');
+        }
+      });
+    </script>
 
     <!-- Message Board -->
     <section aria-labelledby="message-board-title">
